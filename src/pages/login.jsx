@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import {Link} from 'react-router-dom'
 
 const Login = () => {
     const [formData,setFormData]=useState({
@@ -76,6 +77,9 @@ const Login = () => {
             </div>
 
             <button type='submit' style={buttonStyle}>Login</button>
+            <p style={{marginTop:'10px', textAlign:'center'}}>Don't have an account?</p>
+            <Link to="/register">
+            <button style={buttonStyle}>Go to Register</button></Link>
         </form>
       
     </div>
