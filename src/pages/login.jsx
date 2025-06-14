@@ -1,56 +1,89 @@
-import { useState } from "react";
-import AuthLogin from "../components/AuthLogin";
-import AuthRegister from "../components/AuthRegister";
+import React,{useState} from 'react'
+import {Link} from 'react-router-dom'
 
-export default function Login() {
-  const [isRegister, setIsRegister] = useState(false);
-  const [role, setRole] = useState("intern");
+const Login = () => {
+    const [formData,setFormData]=useState({
+        email:'',
+        password:''
+    });
+
+    const containerStyle={
+        width:'350px',
+        margin:'50px auto',
+        padding:'30px',
+        border:'1px solid #ccc',
+        borderRadius:'10px',
+        boxShadow:'2px 2px 15px rgba(0,0,0,0.1)',
+        backgroundColor:'#fff',
+        fontFamily:'Arial, sans-serif'
+    };
+
+    const headingStyle={
+        textAlign:'center',
+        marginBottom:'20px',
+        fontSize:'24px',
+        color:'#333'
+    };
+
+    const inputGroupStyle={
+        marginBottom:'15px',
+        display:'flex',
+        flexDirection:'column'
+    };
+
+    const labelStyle={
+        marginBottom:'5px',
+        fontWeight:'bold'
+    };
+
+    const inputStyle={
+        padding:'10px',
+        borderRadius:'5px',
+        border:'1px solid #ccc'
+    };
+
+    const buttonStyle={
+        width:'100%',
+        padding:'10px',
+        backgroundColor:'#007bff',
+        color:'#fff',
+        border:'none',
+        borderRadius:'5px',
+        cursor:'pointer',
+        marginTop:'10px'
+    };
+
+    const handleChange=(e)=>{
+        setFormData({...formData,[e.target.name]:e.target.value})
+    };
+
+    const handleSubmit=(e)=>{
+        e.preventDefault();
+        console.log('Loggingin intern:',formData);
+    };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
-      <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6">
-          {isRegister ? "Register Account" : "Login to Your Account"}
-        </h2>
+    <div style={containerStyle}>
+        <h2 style={headingStyle}>Intern Login</h2>
+        <form onSubmit={handleSubmit}>
+            <div style={inputGroupStyle}>
+                <label style={labelStyle}>Email</label>
+                <input style={inputStyle} type='email' name='email' value={formData.email} onChange={handleChange} required></input>
+            </div>
+            
+            <div style={inputGroupStyle}>
+                <label style={labelStyle}>Password</label>
+                <input style={inputStyle} type='password' name='password' value={formData.password} onChange={handleChange} required></input>
+            </div>
 
-        <div className="flex items-center justify-center space-x-6 mb-4">
-          <label className="flex items-center space-x-2">
-            <input
-              type="radio"
-              name="role"
-              value="intern"
-              checked={role === "intern"}
-              onChange={(e) => setRole(e.target.value)}
-              className="accent-indigo-600"
-            />
-            <span>Intern</span>
-          </label>
-
-          <label className="flex items-center space-x-2">
-            <input
-              type="radio"
-              name="role"
-              value="mentor"
-              checked={role === "mentor"}
-              onChange={(e) => setRole(e.target.value)}
-              className="accent-indigo-600"
-            />
-            <span>Mentor</span>
-          </label>
-        </div>
-
-        {isRegister ? <AuthRegister role={role} /> : <AuthLogin role={role} />}
-
-        <p className="text-center mt-4 text-sm">
-          {isRegister ? "Already have an account?" : "New here?"}
-          <button
-            onClick={() => setIsRegister(!isRegister)}
-            className="text-indigo-600 ml-1 underline"
-          >
-            {isRegister ? "Login" : "Register"}
-          </button>
-        </p>
-      </div>
+            <button type='submit' style={buttonStyle}>Login</button>
+            <p style={{marginTop:'10px', textAlign:'center'}}>Don't have an account?</p>
+            <Link to="/register">
+            <button style={buttonStyle}>Go to Register</button></Link>
+        </form>
+      
     </div>
-  );
+  )
 }
+
+export default Login
