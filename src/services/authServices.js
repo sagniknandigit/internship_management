@@ -1,22 +1,29 @@
-const mentors = [];
-const interns = [];
+export const authService = {
+  login: async (email, password) => {
+    console.log(`(Mock API) Attempting login for: ${email}`);
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (email === 'intern@example.com' && password === 'password') {
+          resolve({
+            token: 'fake-jwt-token',
+            user: { name: 'Test Intern', email: 'intern@example.com', role: 'intern' },
+          });
+        } else {
+          reject(new Error('Invalid credentials'));
+        }
+      }, 1000);
+    });
+  },
 
-export const registerUser = (user, role) => {
-  if (role === "mentor") {
-    mentors.push({ ...user, approved: false });
-  } else {
-    interns.push(user);
-  }
-};
-
-export const loginUser = (email, password, role) => {
-  const users = role === "mentor" ? mentors : interns;
-  const found = users.find(
-    (u) => u.email === email && u.password === password
-  );
-  if (!found) return null;
-  if (role === "mentor" && !found.approved) {
-    return "not-approved";
-  }
-  return found;
+  register: async (userData) => {
+    console.log('(Mock API) Registering user:', userData.name);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+            token: 'new-fake-jwt-token',
+            user: { name: userData.name, email: userData.email, role: 'intern' },
+        });
+      }, 1000);
+    });
+  },
 };
