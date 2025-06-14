@@ -1,60 +1,89 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React,{useState} from 'react'
+import {Link} from 'react-router-dom'
 
 const Login = () => {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
-          Login
-        </h1>
-        <form>
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-gray-700 text-sm font-bold mb-2"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
-              placeholder="your@example.com"
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="password"
-              className="block text-gray-700 text-sm font-bold mb-2"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
-              placeholder="********"
-            />
-          </div>
-          <button
-            type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline w-full transition duration-200"
-          >
-            Sign In
-          </button>
-        </form>
-        <p className="text-center text-gray-600 text-sm mt-4">
-          Don't have an account?{" "}
-          <Link to="/register" className="text-blue-600 hover:underline">
-            Register
-          </Link>
-        </p>
-      </div>
-    </div>
-  );
-};
+    const [formData,setFormData]=useState({
+        email:'',
+        password:''
+    });
 
-export default Login;
+    const containerStyle={
+        width:'350px',
+        margin:'50px auto',
+        padding:'30px',
+        border:'1px solid #ccc',
+        borderRadius:'10px',
+        boxShadow:'2px 2px 15px rgba(0,0,0,0.1)',
+        backgroundColor:'#fff',
+        fontFamily:'Arial, sans-serif'
+    };
+
+    const headingStyle={
+        textAlign:'center',
+        marginBottom:'20px',
+        fontSize:'24px',
+        color:'#333'
+    };
+
+    const inputGroupStyle={
+        marginBottom:'15px',
+        display:'flex',
+        flexDirection:'column'
+    };
+
+    const labelStyle={
+        marginBottom:'5px',
+        fontWeight:'bold'
+    };
+
+    const inputStyle={
+        padding:'10px',
+        borderRadius:'5px',
+        border:'1px solid #ccc'
+    };
+
+    const buttonStyle={
+        width:'100%',
+        padding:'10px',
+        backgroundColor:'#007bff',
+        color:'#fff',
+        border:'none',
+        borderRadius:'5px',
+        cursor:'pointer',
+        marginTop:'10px'
+    };
+
+    const handleChange=(e)=>{
+        setFormData({...formData,[e.target.name]:e.target.value})
+    };
+
+    const handleSubmit=(e)=>{
+        e.preventDefault();
+        console.log('Loggingin intern:',formData);
+    };
+
+  return (
+    <div style={containerStyle}>
+        <h2 style={headingStyle}>Intern Login</h2>
+        <form onSubmit={handleSubmit}>
+            <div style={inputGroupStyle}>
+                <label style={labelStyle}>Email</label>
+                <input style={inputStyle} type='email' name='email' value={formData.email} onChange={handleChange} required></input>
+            </div>
+            
+            <div style={inputGroupStyle}>
+                <label style={labelStyle}>Password</label>
+                <input style={inputStyle} type='password' name='password' value={formData.password} onChange={handleChange} required></input>
+            </div>
+
+            <button type='submit' style={buttonStyle}>Login</button>
+            <p style={{marginTop:'10px', textAlign:'center'}}>Don't have an account?</p>
+            <Link to="/register">
+            <button style={buttonStyle}>Go to Register</button></Link>
+        </form>
+      
+    </div>
+  )
+}
+
+export default Login
