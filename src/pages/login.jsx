@@ -1,56 +1,60 @@
-import { useState } from "react";
-import AuthLogin from "../components/AuthLogin";
-import AuthRegister from "../components/AuthRegister";
+import React from "react";
+import { Link } from "react-router-dom";
 
-export default function Login() {
-  const [isRegister, setIsRegister] = useState(false);
-  const [role, setRole] = useState("intern");
-
+const Login = () => {
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
-      <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6">
-          {isRegister ? "Register Account" : "Login to Your Account"}
-        </h2>
-
-        <div className="flex items-center justify-center space-x-6 mb-4">
-          <label className="flex items-center space-x-2">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
+          Login
+        </h1>
+        <form>
+          <div className="mb-4">
+            <label
+              htmlFor="email"
+              className="block text-gray-700 text-sm font-bold mb-2"
+            >
+              Email
+            </label>
             <input
-              type="radio"
-              name="role"
-              value="intern"
-              checked={role === "intern"}
-              onChange={(e) => setRole(e.target.value)}
-              className="accent-indigo-600"
+              type="email"
+              id="email"
+              name="email"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
+              placeholder="your@example.com"
             />
-            <span>Intern</span>
-          </label>
-
-          <label className="flex items-center space-x-2">
+          </div>
+          <div className="mb-6">
+            <label
+              htmlFor="password"
+              className="block text-gray-700 text-sm font-bold mb-2"
+            >
+              Password
+            </label>
             <input
-              type="radio"
-              name="role"
-              value="mentor"
-              checked={role === "mentor"}
-              onChange={(e) => setRole(e.target.value)}
-              className="accent-indigo-600"
+              type="password"
+              id="password"
+              name="password"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
+              placeholder="********"
             />
-            <span>Mentor</span>
-          </label>
-        </div>
-
-        {isRegister ? <AuthRegister role={role} /> : <AuthLogin role={role} />}
-
-        <p className="text-center mt-4 text-sm">
-          {isRegister ? "Already have an account?" : "New here?"}
+          </div>
           <button
-            onClick={() => setIsRegister(!isRegister)}
-            className="text-indigo-600 ml-1 underline"
+            type="submit"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline w-full transition duration-200"
           >
-            {isRegister ? "Login" : "Register"}
+            Sign In
           </button>
+        </form>
+        <p className="text-center text-gray-600 text-sm mt-4">
+          Don't have an account?{" "}
+          <Link to="/register" className="text-blue-600 hover:underline">
+            Register
+          </Link>
         </p>
       </div>
     </div>
   );
-}
+};
+
+export default Login;
