@@ -1,39 +1,32 @@
-// src/pages/Home.jsx
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Home = () => {
+const HomePage = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-4">
-      <h1 className="text-5xl font-extrabold text-gray-900 mb-6 text-center">
-        Welcome to Aninex Internship Portal
+    <div className="text-center py-16">
+      <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900">
+        Find Your Next Opportunity at Aninex
       </h1>
-      <p className="text-xl text-gray-600 mb-8 text-center max-w-2xl">
-        Streamlining your internship experience, from application to success.
+      <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+        Our internship program is designed to provide hands-on experience,
+        mentorship, and a direct path to a successful career in technology.
       </p>
-      <div className="flex space-x-4">
-        <Link
-          to="/login"
-          className="px-8 py-3 bg-blue-600 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
-        >
-          Login
-        </Link>
+      <div className="mt-8 flex justify-center gap-4">
         <Link
           to="/register"
-          className="px-8 py-3 border border-blue-600 text-blue-600 text-lg font-semibold rounded-lg shadow-md hover:bg-blue-50 hover:text-blue-700 transition duration-300"
+          className="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition"
         >
-          Register
+          Get Started
+        </Link>
+        <Link
+          to="/login"
+          className="bg-white text-blue-600 font-bold py-3 px-6 rounded-lg border border-gray-300 hover:bg-gray-100 transition"
+        >
+          View Internships
         </Link>
       </div>
-      <p className="mt-12 text-gray-500">
-        (Note: Temporarily, you can access mentor dashboard via{" "}
-        <Link to="/mentor/dashboard" className="text-blue-500 underline">
-          /mentor/dashboard
-        </Link>
-        )
-      </p>
     </div>
   );
 };
 
-export default Home;
+export default HomePage;

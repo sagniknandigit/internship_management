@@ -1,6 +1,6 @@
 import React from "react";
 
-const MentorCommunication = () => {
+const Communication = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-4xl font-bold text-gray-800 mb-8">
@@ -33,4 +33,4 @@ const MentorCommunication = () => {
   );
 };
 
-export default MentorCommunication;
+export default Communication;

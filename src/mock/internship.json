@@ -1,0 +1,90 @@
+[
+  {
+    "id": "int001",
+    "title": "Frontend Developer Intern",
+    "location": "Remote",
+    "duration": "3 Months",
+    "stipend": "₹1,500/month",
+    "postedOn": "2024-10-15",
+    "applyBy": "2024-11-30",
+    "description": "An exciting opportunity to work with our frontend team on cutting-edge web applications. You will learn and implement features using React, Tailwind CSS, and modern JavaScript.",
+    "skills": ["React", "JavaScript", "HTML5", "CSS3", "Git"]
+  },
+  {
+    "id": "int002",
+    "title": "Backend Developer Intern (PHP/Laravel)",
+    "location": "New York, NY",
+    "duration": "6 Months",
+    "stipend": "₹2,000/month",
+    "postedOn": "2024-10-20",
+    "applyBy": "2024-12-05",
+    "description": "Join our backend team to design, develop, and maintain robust APIs using PHP and the Laravel framework. You will gain experience with MySQL, API design, and server management.",
+    "skills": ["PHP", "Laravel", "MySQL", "REST APIs", "Teamwork"]
+  },
+  {
+    "id": "int003",
+    "title": "UI/UX Design Intern",
+    "location": "Remote",
+    "duration": "3 Months",
+    "stipend": "₹1,500/month",
+    "postedOn": "2024-10-22",
+    "applyBy": "2024-11-25",
+    "description": "Work alongside our design team to create intuitive and beautiful user interfaces. You will be involved in wireframing, prototyping, and user research.",
+    "skills": ["Figma", "Adobe XD", "User Research", "Prototyping"]
+  },
+  {
+    "id": "int004",
+    "title": "Digital Marketing Intern",
+    "location": "Bangalore, India",
+    "duration": "2 Months",
+    "stipend": "Unpaid",
+    "postedOn": "2024-11-01",
+    "applyBy": "2024-12-10",
+    "description": "A learning opportunity to gain hands-on experience in digital campaigns, social media marketing, and SEO optimization under expert guidance.",
+    "skills": ["SEO", "Google Analytics", "Social Media", "Creativity"]
+  },
+  {
+    "id": "int005",
+    "title": "Data Science Intern",
+    "location": "Remote",
+    "duration": "6 Months",
+    "stipend": "₹15,000/month",
+    "postedOn": "2024-10-28",
+    "applyBy": "2024-12-01",
+    "description": "You will work with real datasets to build models and gain practical experience in Python, machine learning algorithms, and data visualization tools.",
+    "skills": ["Python", "Pandas", "Machine Learning", "Matplotlib", "Jupyter"]
+  },
+  {
+    "id": "int006",
+    "title": "Content Writing Intern",
+    "location": "Delhi, India",
+    "duration": "3 Months",
+    "stipend": "₹8,000/month",
+    "postedOn": "2024-11-05",
+    "applyBy": "2024-12-15",
+    "description": "Create engaging blog posts, social media content, and marketing copy. Improve your writing and SEO knowledge while contributing to real campaigns.",
+    "skills": ["Writing", "SEO", "Grammar", "WordPress", "Creativity"]
+  },
+  {
+    "id": "int007",
+    "title": "Cybersecurity Intern",
+    "location": "Mumbai, India",
+    "duration": "4 Months",
+    "stipend": "Unpaid",
+    "postedOn": "2024-11-10",
+    "applyBy": "2025-01-05",
+    "description": "An opportunity to learn about network security, threat analysis, and ethical hacking from professionals in the industry.",
+    "skills": ["Networking", "Linux", "Python", "Ethical Hacking"]
+  },
+  {
+    "id": "int008",
+    "title": "AI Research Intern",
+    "location": "Remote",
+    "duration": "3 Months",
+    "stipend": "₹25,000/month",
+    "postedOn": "2024-10-30",
+    "applyBy": "2024-12-10",
+    "description": "Contribute to ongoing research in artificial intelligence, focusing on NLP and computer vision projects. Ideal for candidates with strong academic background.",
+    "skills": ["Python", "TensorFlow", "NLP", "OpenCV", "Research"]
+  }
+]

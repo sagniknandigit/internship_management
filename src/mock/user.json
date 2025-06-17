@@ -1,0 +1,106 @@
+[
+  {
+    "id": "admin01",
+    "email": "admin@aninex.com",
+    "password": "password123",
+    "name": "Admin User",
+    "role": "Admin",
+    "profilePictureUrl": "https://uifaces.co/our-content/donated/vIqzOHw5.jpg"
+  },
+  {
+    "id": "mentor01",
+    "email": "mentor01@aninex.com",
+    "password": "password123",
+    "name": "Rajiv Sharma",
+    "role": "Mentor",
+    "profilePictureUrl": "https://randomuser.me/api/portraits/men/32.jpg"
+  },
+  {
+    "id": "mentor02",
+    "email": "mentor02@aninex.com",
+    "password": "password123",
+    "name": "Meena Iyer",
+    "role": "Mentor",
+    "profilePictureUrl": "https://randomuser.me/api/portraits/women/44.jpg"
+  },
+  {
+    "id": "mentor03",
+    "email": "mentor03@aninex.com",
+    "password": "password123",
+    "name": "Abhishek Patel",
+    "role": "Mentor",
+    "profilePictureUrl": null
+  },
+  {
+    "id": "intern01",
+    "email": "intern01@aninex.com",
+    "password": "password123",
+    "name": "Aarav Kumar",
+    "role": "Intern",
+    "profilePictureUrl": "https://randomuser.me/api/portraits/men/1.jpg"
+  },
+  {
+    "id": "intern02",
+    "email": "intern02@aninex.com",
+    "password": "password123",
+    "name": "Siya Singh",
+    "role": "Intern",
+    "profilePictureUrl": null
+  },
+  {
+    "id": "intern03",
+    "email": "intern03@aninex.com",
+    "password": "password123",
+    "name": "Vivaan Joshi",
+    "role": "Intern",
+    "profilePictureUrl": "https://randomuser.me/api/portraits/men/33.jpg"
+  },
+  {
+    "id": "intern04",
+    "email": "intern04@aninex.com",
+    "password": "password123",
+    "name": "Isha Verma",
+    "role": "Intern",
+    "profilePictureUrl": "https://randomuser.me/api/portraits/women/21.jpg"
+  },
+  {
+    "id": "intern05",
+    "email": "intern05@aninex.com",
+    "password": "password123",
+    "name": "Aditya Rana",
+    "role": "Intern",
+    "profilePictureUrl": null
+  },
+  {
+    "id": "intern06",
+    "email": "intern06@aninex.com",
+    "password": "password123",
+    "name": "Kritika Bansal",
+    "role": "Intern",
+    "profilePictureUrl": "https://randomuser.me/api/portraits/women/12.jpg"
+  },
+  {
+    "id": "intern07",
+    "email": "intern07@aninex.com",
+    "password": "password123",
+    "name": "Tanmay Desai",
+    "role": "Intern",
+    "profilePictureUrl": "https://randomuser.me/api/portraits/men/15.jpg"
+  },
+  {
+    "id": "intern08",
+    "email": "intern08@aninex.com",
+    "password": "password123",
+    "name": "Priya Raj",
+    "role": "Intern",
+    "profilePictureUrl": null
+  },
+  {
+    "id": "intern09",
+    "email": "intern09@aninex.com",
+    "password": "password123",
+    "name": "Ravi Nair",
+    "role": "Intern",
+    "profilePictureUrl": "https://randomuser.me/api/portraits/men/45.jpg"
+  }
+]
