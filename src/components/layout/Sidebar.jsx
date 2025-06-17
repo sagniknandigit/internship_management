@@ -64,7 +64,7 @@ const Sidebar = () => {
 
       {/* --- NEW Profile Section at the top --- */}
       <div className="flex flex-col items-center p-4 mt-4">
-        <ProfileAvatar user={user} size="20" />
+        <ProfileAvatar user={user} size="lg" />
         <p className="mt-3 text-lg font-semibold">{user?.name}</p>
         <p className="text-sm text-indigo-300">{user?.role}</p>
       </div>
