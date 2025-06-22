@@ -1,0 +1,42 @@
+[
+    {
+        "id": "task101",
+        "title": "Setup Development Environment",
+        "internId": "intern01",
+        "mentorId": "mentor01",
+        "submittedDate": "2024-10-25",
+        "status": "Pending Review"
+    },
+    {
+        "id": "task102",
+        "title": "Component Library Research",
+        "internId": "intern04",
+        "mentorId": "mentor02",
+        "submittedDate": "2024-10-24",
+        "status": "Approved"
+    },
+    {
+        "id": "task103",
+        "title": "API Integration - User Module",
+        "internId": "intern01",
+        "mentorId": "mentor01",
+        "submittedDate": "2024-10-22",
+        "status": "Needs Revision"
+    },
+    {
+        "id": "task104",
+        "title": "Write Unit Tests for Auth Service",
+        "internId": "intern06",
+        "mentorId": "mentor02",
+        "submittedDate": "2024-10-26",
+        "status": "Pending Review"
+    },
+    {
+        "id": "task105",
+        "title": "Database Schema Design",
+        "internId": "intern05",
+        "mentorId": "mentor03",
+        "submittedDate": "2024-10-27",
+        "status": "Pending Review"
+    }
+]

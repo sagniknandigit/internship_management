@@ -4,41 +4,42 @@ import { useAuth } from "../context/AuthContext";
 
 // Layouts
 import MainLayout from "../layouts/MainLayout";
+import InternLayout from "../layouts/InternLayout";
+import MentorLayout from "../layouts/MentorLayout";
 
-// Pages
+// General Pages
 import HomePage from "../pages/Home";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
-import AdminLoginPage from "../pages/Admin/AdminLoginPage";
-import AdminDashboard from "../pages/Admin/Dashboard";
-import InternDashboard from "../pages/Intern/Dashboard";
-import MentorDashboard from "../pages/Mentor/Dashboard";
 import UnauthorizedPage from "../pages/UnauthorizedPage";
 import NotFoundPage from "../pages/NotFound";
-import ProtectedRoute from "./ProtectedRoutes";
 import InternshipsPage from "../pages/InternshipsPage";
-import InternLayout from "../layouts/InternLayout";
+
+// Admin Pages
+import AdminLoginPage from "../pages/Admin/AdminLoginPage";
+import AdminDashboard from "../pages/Admin/Dashboard";
+
+// Intern Pages (using 'as' to avoid naming conflicts)
+import InternDashboard from "../pages/Intern/Dashboard";
 import MyApplications from "../pages/Intern/MyApplications";
 import MyTasks from "../pages/Intern/MyTasks";
 import Documents from "../pages/Intern/Documents";
-import Chat from "../pages/Intern/Chat";
-import Settings from "../pages/Intern/Settings";
-import Meetings from "../pages/Intern/Meetings";
+import InternChat from "../pages/Intern/Chat";
+import InternSettings from "../pages/Intern/Settings";
+import InternMeetings from "../pages/Intern/Meetings";
 
-// Route Guard
+// Mentor Pages -- IMPORT THE NEW PAGES
+import MentorDashboard from "../pages/Mentor/Dashboard";
+import AssignedInterns from "../pages/Mentor/AssignedInterns";
+import ReviewTasks from "../pages/Mentor/ReviewTasks";
+import MentorMeetings from "../pages/Mentor/MentorMeetings";
+import MentorChat from "../pages/Mentor/MentorChat";
+import MentorSettings from "../pages/Mentor/MentorSettings";
+
+// Components
+import ProtectedRoute from "./ProtectedRoutes";
 
 const AppRoutes = () => {
-  const { isAuthenticated, loading } = useAuth();
-
-  // A wrapper for the root route to handle the initial redirect
-  const InitialRedirect = () => {
-    if (loading) {
-      return <div>Loading...</div>; // Or a full-page spinner
-    }
-    // If the user is not authenticated, redirect them to the login page
-    return !isAuthenticated ? <Navigate to="/login" /> : <HomePage />;
-  };
-
   return (
     <Routes>
       {/* Public auth routes */}
@@ -47,6 +48,15 @@ const AppRoutes = () => {
       <Route path="/admin/login" element={<AdminLoginPage />} />
       <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
+      {/* Main public-facing layout */}
+      <Route element={<MainLayout />}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/internships" element={<InternshipsPage />} />
+      </Route>
+
+      {/* --- PROTECTED ROUTE GROUPS --- */}
+
+      {/* Intern Route Group */}
       <Route
         path="/intern"
         element={
@@ -55,68 +65,46 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       >
+        <Route index element={<Navigate to="dashboard" replace />} />
         <Route path="dashboard" element={<InternDashboard />} />
         <Route path="applications" element={<MyApplications />} />
         <Route path="tasks" element={<MyTasks />} />
         <Route path="documents" element={<Documents />} />
-        <Route path="chat" element={<Chat />} />
-        <Route path="meetings" element={<Meetings />} />
-        <Route path="settings" element={<Settings />} />
+        <Route path="chat" element={<InternChat />} />
+        <Route path="meetings" element={<InternMeetings />} />
+        <Route path="settings" element={<InternSettings />} />
       </Route>
 
-      {/* The root path handles the initial redirect logic */}
+      {/* Mentor Route Group - CORRECTED */}
       <Route
-        path="/"
+        path="/mentor"
         element={
-          <MainLayout>
-            <InitialRedirect />
-          </MainLayout>
+          <ProtectedRoute roles={["Mentor"]}>
+            <MentorLayout />
+          </ProtectedRoute>
         }
-      />
+      >
+        <Route index element={<Navigate to="dashboard" replace />} />
+        <Route path="dashboard" element={<MentorDashboard />} />
+        <Route path="interns" element={<AssignedInterns />} />
+        <Route path="tasks" element={<ReviewTasks />} />
+        <Route path="meetings" element={<MentorMeetings />} />{" "}
+        <Route path="chat" element={<MentorChat />} />
+        <Route path="settings" element={<MentorSettings />} />
+      </Route>
 
-      {/* --- PROTECTED ROUTES --- */}
-      {/* These routes are only accessible if the user is logged in AND has the correct role */}
-
-      {/* Admin Routes */}
+      {/* Admin Route Group */}
       <Route
         path="/admin/dashboard"
         element={
           <ProtectedRoute roles={["Admin"]}>
-            {/* You can create a dedicated AdminLayout here if needed */}
-            <MainLayout>
-              <AdminDashboard />
-            </MainLayout>
-          </ProtectedRoute>
-        }
-      />
-
-      {/* Intern Routes */}
-      <Route element={<MainLayout />}>
-        <Route path="/" element={<InitialRedirect />} />
-        <Route path="/internships" element={<InternshipsPage />} />
-      </Route>
-
-      {/* Mentor Routes */}
-      <Route
-        path="/mentor/dashboard"
-        element={
-          <ProtectedRoute roles={["Mentor"]}>
-            <MainLayout>
-              <MentorDashboard />
-            </MainLayout>
+            <AdminDashboard />
           </ProtectedRoute>
         }
       />
 
       {/* Not Found Route - must be last */}
-      <Route
-        path="*"
-        element={
-          <MainLayout>
-            <NotFoundPage />
-          </MainLayout>
-        }
-      />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };

@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import AninexLogo from "../../assets/images/aninex-logo.jpeg";
-import ProfileAvatar from "../ui/ProfileAvatar"; 
+import ProfileAvatar from "../ui/ProfileAvatar";
 
 import {
   IoGridOutline,
@@ -11,70 +10,107 @@ import {
   IoCheckmarkDoneCircleOutline,
   IoChatbubblesOutline,
   IoVideocamOutline,
-  IoSettingsOutline, // <-- New Icon
+  IoSettingsOutline,
   IoLogOutOutline,
+  IoPeopleOutline,
+  IoFileTrayFullOutline,
 } from "react-icons/io5";
 
 const Sidebar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [navItems, setNavItems] = useState([]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    // Define navigation items for each role
+    const internNavItems = [
+      { to: "/intern/dashboard", icon: IoGridOutline, label: "Dashboard" },
+      {
+        to: "/internships",
+        icon: IoBriefcaseOutline,
+        label: "Find Internships",
+      },
+      {
+        to: "/intern/applications",
+        icon: IoDocumentTextOutline,
+        label: "My Applications",
+      },
+      {
+        to: "/intern/tasks",
+        icon: IoCheckmarkDoneCircleOutline,
+        label: "My Tasks",
+      },
+      {
+        to: "/intern/documents",
+        icon: IoDocumentTextOutline,
+        label: "Documents",
+      },
+      {
+        to: "/intern/chat",
+        icon: IoChatbubblesOutline,
+        label: "Chat with Mentor",
+      },
+      { to: "/intern/meetings", icon: IoVideocamOutline, label: "Meetings" },
+    ];
+
+    const mentorNavItems = [
+      { to: "/mentor/dashboard", icon: IoGridOutline, label: "Dashboard" },
+      {
+        to: "/mentor/interns",
+        icon: IoPeopleOutline,
+        label: "Assigned Interns",
+      },
+      {
+        to: "/mentor/tasks",
+        icon: IoFileTrayFullOutline,
+        label: "Review Tasks",
+      },
+      { to: "/mentor/meetings", icon: IoVideocamOutline, label: "Meetings" },
+      { to: "/mentor/chat", icon: IoChatbubblesOutline, label: "Chats" },
+    ];
+
+    // Set the navigation items based on the user's role
+    if (user.role === "Intern") {
+      setNavItems(internNavItems);
+    } else if (user.role === "Mentor") {
+      setNavItems(mentorNavItems);
+    }
+    // Add other roles like 'Admin' here if needed
+  }, [user]);
 
   const handleLogout = () => {
     logout();
     navigate("/login");
   };
 
-  const navItems = [
-    { to: "/intern/dashboard", icon: IoGridOutline, label: "Dashboard" },
-    { to: "/internships", icon: IoBriefcaseOutline, label: "Find Internships" },
-    {
-      to: "/intern/applications",
-      icon: IoDocumentTextOutline,
-      label: "My Applications",
-    },
-    {
-      to: "/intern/tasks",
-      icon: IoCheckmarkDoneCircleOutline,
-      label: "My Tasks",
-    },
-    {
-      to: "/intern/documents",
-      icon: IoDocumentTextOutline,
-      label: "Documents",
-    },
-    {
-      to: "/intern/chat",
-      icon: IoChatbubblesOutline,
-      label: "Chat with Mentor",
-    },
-    { to: "/intern/meetings", icon: IoVideocamOutline, label: "Meetings" },
-  ];
-
-  // --- NEW professional color theme ---
+  // --- Reusable Tailwind classes ---
   const baseLinkClass =
     "flex items-center px-4 py-3 text-indigo-100 rounded-lg hover:bg-indigo-700 hover:text-white transition-colors duration-200";
   const activeLinkClass =
     "bg-indigo-950 bg-opacity-50 text-white font-semibold";
 
+  // Determine the settings link based on role
+  const settingsLink =
+    user?.role === "Intern" ? "/intern/settings" : "/mentor/settings";
+
   return (
     <div className="flex flex-col w-64 h-full bg-indigo-800 text-white">
-      {/* <div className="flex items-center justify-center h-20 border-b border-indigo-700">
-        <img className="h-8" src={AninexLogo} alt="Aninex" />
-      </div> */}
-
-      {/* --- NEW Profile Section at the top --- */}
+      {/* Profile Section */}
       <div className="flex flex-col items-center p-4 mt-4">
         <ProfileAvatar user={user} size="lg" />
         <p className="mt-3 text-lg font-semibold">{user?.name}</p>
         <p className="text-sm text-indigo-300">{user?.role}</p>
       </div>
 
+      {/* Dynamic Navigation */}
       <nav className="flex-1 px-4 py-4 mt-4 space-y-2">
         {navItems.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
-            end={item.to === "/intern/dashboard"}
+            end={item.to.endsWith("/dashboard")} // Ensure only dashboard is 'end'
             className={({ isActive }) =>
               `${baseLinkClass} ${isActive ? activeLinkClass : ""}`
             }
@@ -85,10 +121,10 @@ const Sidebar = () => {
         ))}
       </nav>
 
-      {/* --- NEW Settings and Logout Section at the bottom --- */}
+      {/* Bottom Settings and Logout Section */}
       <div className="px-4 py-4 border-t border-indigo-700 space-y-2">
         <NavLink
-          to="/intern/settings"
+          to={settingsLink}
           className={({ isActive }) =>
             `${baseLinkClass} ${isActive ? activeLinkClass : ""}`
           }

@@ -13,13 +13,13 @@ const HomePage = () => {
       </p>
       <div className="mt-8 flex justify-center gap-4">
         <Link
-          to="/register"
+          to="/login"
           className="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition"
         >
           Get Started
         </Link>
         <Link
-          to="/login"
+          to="/internships"
           className="bg-white text-blue-600 font-bold py-3 px-6 rounded-lg border border-gray-300 hover:bg-gray-100 transition"
         >
           View Internships

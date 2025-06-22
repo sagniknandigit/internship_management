@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "title": "Weekly Sync & Project Review",
+        "internId": "intern01",
+        "mentorId": "mentor01",
+        "date": "2024-11-28",
+        "time": "11:00 AM",
+        "link": "https://meet.google.com/xyz-abc-def"
+    },
+    {
+        "id": 2,
+        "title": "Code Review Session",
+        "internId": "intern04",
+        "mentorId": "mentor02",
+        "date": "2024-11-29",
+        "time": "2:00 PM",
+        "link": "https://meet.google.com/ghi-jkl-mno"
+    },
+    {
+        "id": 3,
+        "title": "Final Internship Presentation Prep",
+        "internId": "intern06",
+        "mentorId": "mentor02",
+        "date": "2024-12-05",
+        "time": "10:00 AM",
+        "link": "https://meet.google.com/pqr-stu-vwx"
+    },
+    {
+        "id": 4,
+        "title": "AI Model Brainstorming",
+        "internId": "intern09",
+        "mentorId": "mentor03",
+        "date": "2024-12-02",
+        "time": "3:00 PM",
+        "link": "https://meet.google.com/jhy-bgt-rfc"
+    }
+]

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import Spinner from "../../components/ui/Spinner";
 
@@ -91,6 +91,12 @@ const AdminLoginPage = () => {
             {loading ? <Spinner /> : "Log In as Admin"}
           </button>
         </form>
+        <p className="text-center text-sm text-gray-600 mt-6">
+          Back to{" "}
+          <Link to="/login" className="text-blue-600 hover:underline">
+            Login Page
+          </Link>
+        </p>
       </div>
     </div>
   );

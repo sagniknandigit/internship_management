@@ -1,0 +1,39 @@
+{
+    "intern01": [
+        {
+            "sender": "intern",
+            "text": "Hi Rajiv, I have a question about the task.",
+            "timestamp": "10:30 AM"
+        },
+        {
+            "sender": "me",
+            "text": "Sure Aarav, what is it?",
+            "timestamp": "10:31 AM"
+        }
+    ],
+    "intern02": [
+        {
+            "sender": "intern",
+            "text": "I've pushed the latest commit for review.",
+            "timestamp": "Yesterday"
+        }
+    ],
+    "intern04": [
+        {
+            "sender": "intern",
+            "text": "Can we schedule a meeting for tomorrow?",
+            "timestamp": "10:05 AM"
+        },
+        {
+            "sender": "me",
+            "text": "Yes, does 2 PM work for you?",
+            "timestamp": "10:06 AM"
+        },
+        {
+            "sender": "intern",
+            "text": "Perfect, thank you!",
+            "timestamp": "10:07 AM"
+        }
+    ],
+    "intern06": []
+}

@@ -54,7 +54,7 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white shadow-md rounded-lg p-8">
+      <div className="max-w-md w-full bg-white shadow-md rounded-lg p-8 border-2 border-blue-100">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">
           Welcome Back
         </h2>
@@ -99,15 +99,16 @@ const LoginPage = () => {
           </div>
 
           {/* Simple Captcha placeholder */}
-          <div className="mb-6 text-center">
+          <div className="mb-6 text-center flex flex-row items-center leading-1">
             <p className="text-gray-600">
               Please solve:{" "}
               <span className="font-mono font-bold">4 + 5 = ?</span>
             </p>
             <input
               type="text"
+              required name="captcha"
               placeholder="Your answer"
-              className="w-1/2 mt-2 mx-auto px-3 py-2 border rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-1/2 mx-auto px-3 py-2 border rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
