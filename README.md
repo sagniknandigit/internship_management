@@ -1,12 +1,23 @@
-# React + Vite
+## 🎓 Internship Management Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Description:**  
+The primary goal of this project is to design and develop a fully functional, user-friendly website specifically for managing internships at **Aninex Global Services**. It streamlines the entire internship lifecycle including application, selection, onboarding, and intern management — making the process efficient for both administrators and interns.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### ✅ Features
 
-## Expanding the ESLint configuration
+- Intern registration and application portal  
+- Admin dashboard to manage applicants and onboarded interns  
+- Mentor dashboard for task assignment and intern tracking  
+- Automated workflow for selection and onboarding  
+- Real-time task updates and intern performance logs  
+- Secure login for different roles (Admin, Mentor, Intern)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+### 🛠️ Tech Stack
+
+- **Frontend:** React, Tailwind CSS  
+- **Backend:** Laravel  
+- **Database:** MongoDB
