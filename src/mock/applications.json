@@ -1,0 +1,38 @@
+[
+    {
+        "applicationId": "app001",
+        "internId": "intern01",
+        "internshipId": "int001",
+        "status": "Under Review"
+    },
+    {
+        "applicationId": "app002",
+        "internId": "intern01",
+        "internshipId": "int005",
+        "status": "Submitted"
+    },
+    {
+        "applicationId": "app003",
+        "internId": "intern02",
+        "internshipId": "int002",
+        "status": "Shortlisted"
+    },
+    {
+        "applicationId": "app004",
+        "internId": "intern02",
+        "internshipId": "int003",
+        "status": "Rejected"
+    },
+    {
+        "applicationId": "app005",
+        "internId": "intern04",
+        "internshipId": "int001",
+        "status": "Hired"
+    },
+    {
+        "applicationId": "app006",
+        "internId": "intern04",
+        "internshipId": "int004",
+        "status": "Under Review"
+    }
+]

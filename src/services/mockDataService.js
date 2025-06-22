@@ -2,6 +2,7 @@ import allUsers from "../mock/user.json";
 import allTasks from "../mock/tasks.json";
 import allMeetings from "../mock/meetings.json";
 import allConversations from "../mock/conversations.json";
+import allApplications from '../mock/applications.json';
 
 const mentorAssignments = {
   mentor01: ["intern01", "intern02", "intern03"],
@@ -75,4 +76,20 @@ export const getConversationsForMentor = (mentorId) => {
     conversations[internId] = allConversations[internId] || [];
   });
   return fetchWithDelay(conversations);
+};
+
+// --- APPLICATION-RELATED FUNCTIONS ---
+export const getApplicationsByInternId = (internId) => {
+  const applications = allApplications.filter(app => app.internId === internId);
+  return fetchWithDelay(applications);
+};
+
+export const getTasksByInternId = (internId) => {
+  const tasks = allTasks.filter(task => task.internId === internId);
+  return fetchWithDelay(tasks);
+};
+
+export const getMeetingsByInternId = (internId) => {
+  const meetings = allMeetings.filter(meeting => meeting.internId === internId);
+  return fetchWithDelay(meetings);
 };
