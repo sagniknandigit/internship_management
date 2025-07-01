@@ -1,38 +1,72 @@
 [
-    {
-        "id": 1,
-        "title": "Weekly Sync & Project Review",
-        "internId": "intern01",
-        "mentorId": "mentor01",
-        "date": "2024-11-28",
-        "time": "11:00 AM",
-        "link": "https://meet.google.com/xyz-abc-def"
-    },
-    {
-        "id": 2,
-        "title": "Code Review Session",
-        "internId": "intern04",
-        "mentorId": "mentor02",
-        "date": "2024-11-29",
-        "time": "2:00 PM",
-        "link": "https://meet.google.com/ghi-jkl-mno"
-    },
-    {
-        "id": 3,
-        "title": "Final Internship Presentation Prep",
-        "internId": "intern06",
-        "mentorId": "mentor02",
-        "date": "2024-12-05",
-        "time": "10:00 AM",
-        "link": "https://meet.google.com/pqr-stu-vwx"
-    },
-    {
-        "id": 4,
-        "title": "AI Model Brainstorming",
-        "internId": "intern09",
-        "mentorId": "mentor03",
-        "date": "2024-12-02",
-        "time": "3:00 PM",
-        "link": "https://meet.google.com/jhy-bgt-rfc"
-    }
+  {
+    "id": 1,
+    "title": "Weekly Sync & Project Review",
+    "internId": "intern01",
+    "mentorId": "mentor01",
+    "date": "2024-11-28",
+    "time": "11:00 AM",
+    "link": "https://meet.google.com/xyz-abc-def",
+    "status": "Scheduled"
+  },
+  {
+    "id": 2,
+    "title": "Database Schema Planning",
+    "internId": "intern01",
+    "mentorId": "mentor01",
+    "date": "2024-11-15",
+    "time": "10:00 AM",
+    "link": "https://meet.google.com/db-schema-meet",
+    "status": "Completed"
+  },
+  {
+    "id": 3,
+    "title": "API Debugging Session",
+    "internId": "intern02",
+    "mentorId": "mentor01",
+    "date": "2024-12-01",
+    "time": "3:00 PM",
+    "link": "https://meet.google.com/api-debug",
+    "status": "Scheduled"
+  },
+  {
+    "id": 4,
+    "title": "Internship Introduction",
+    "internId": "intern02",
+    "mentorId": "mentor01",
+    "date": "2024-10-12",
+    "time": "9:30 AM",
+    "link": "https://meet.google.com/introduction-session",
+    "status": "Completed"
+  },
+  {
+    "id": 5,
+    "title": "Final Review & Handover",
+    "internId": "intern03",
+    "mentorId": "mentor01",
+    "date": "2024-12-10",
+    "time": "4:00 PM",
+    "link": "https://meet.google.com/final-review",
+    "status": "Scheduled"
+  },
+  {
+    "id": 6,
+    "title": "Cancelled: UI/UX Feedback Call",
+    "internId": "intern03",
+    "mentorId": "mentor01",
+    "date": "2024-11-18",
+    "time": "1:00 PM",
+    "link": "https://meet.google.com/uiux-feedback",
+    "status": "Cancelled"
+  },
+  {
+    "id": 7,
+    "title": "Tech Stack Orientation",
+    "internId": "intern01",
+    "mentorId": "mentor01",
+    "date": "2024-10-10",
+    "time": "2:00 PM",
+    "link": "https://meet.google.com/tech-orientation",
+    "status": "Completed"
+  }
 ]

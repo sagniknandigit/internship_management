@@ -67,6 +67,7 @@ const Sidebar = () => {
         icon: IoFileTrayFullOutline,
         label: "Review Tasks",
       },
+      {to: "/mentor/documents", icon: IoDocumentTextOutline, label: "Upload Documents"},
       { to: "/mentor/meetings", icon: IoVideocamOutline, label: "Meetings" },
       { to: "/mentor/chat", icon: IoChatbubblesOutline, label: "Chats" },
     ];
