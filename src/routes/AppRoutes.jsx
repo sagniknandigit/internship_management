@@ -21,12 +21,13 @@ import AdminDashboard from "../pages/Admin/Dashboard";
 
 // Intern Pages (using 'as' to avoid naming conflicts)
 import InternDashboard from "../pages/Intern/Dashboard";
+import ApplyForm from "../pages/Intern/ApplyForm";
 import MyApplications from "../pages/Intern/MyApplications";
 import MyTasks from "../pages/Intern/MyTasks";
 import Documents from "../pages/Intern/Documents";
-import InternChat from "../pages/Intern/Chat";
-import InternSettings from "../pages/Intern/Settings";
-import InternMeetings from "../pages/Intern/Meetings";
+import Chat from "../pages/Intern/Chat";
+import Settings from "../pages/Intern/Settings";
+import Meetings from "../pages/Intern/Meetings";
 
 // Mentor Pages -- IMPORT THE NEW PAGES
 import MentorDashboard from "../pages/Mentor/Dashboard";
@@ -35,6 +36,7 @@ import ReviewTasks from "../pages/Mentor/ReviewTasks";
 import MentorMeetings from "../pages/Mentor/MentorMeetings";
 import MentorChat from "../pages/Mentor/MentorChat";
 import MentorSettings from "../pages/Mentor/MentorSettings";
+import MentorDocuments from "../pages/Mentor/MentorDocuments";
 
 // Components
 import ProtectedRoute from "./ProtectedRoutes";
@@ -67,12 +69,13 @@ const AppRoutes = () => {
       >
         <Route index element={<Navigate to="dashboard" replace />} />
         <Route path="dashboard" element={<InternDashboard />} />
+        <Route path="apply" element={<ApplyForm/>}/>
         <Route path="applications" element={<MyApplications />} />
         <Route path="tasks" element={<MyTasks />} />
         <Route path="documents" element={<Documents />} />
-        <Route path="chat" element={<InternChat />} />
-        <Route path="meetings" element={<InternMeetings />} />
-        <Route path="settings" element={<InternSettings />} />
+        <Route path="chat" element={<Chat/>} />
+        <Route path="meetings" element={<Meetings/>} />
+        <Route path="settings" element={<Settings/>} />
       </Route>
 
       {/* Mentor Route Group - CORRECTED */}
@@ -88,6 +91,7 @@ const AppRoutes = () => {
         <Route path="dashboard" element={<MentorDashboard />} />
         <Route path="interns" element={<AssignedInterns />} />
         <Route path="tasks" element={<ReviewTasks />} />
+        <Route path="documents" element={<MentorDocuments/>} />
         <Route path="meetings" element={<MentorMeetings />} />{" "}
         <Route path="chat" element={<MentorChat />} />
         <Route path="settings" element={<MentorSettings />} />

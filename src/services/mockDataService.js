@@ -1,15 +1,19 @@
+// Import mock data from local JSON files
 import allUsers from "../mock/user.json";
 import allTasks from "../mock/tasks.json";
 import allMeetings from "../mock/meetings.json";
 import allConversations from "../mock/conversations.json";
-import allApplications from '../mock/applications.json';
+import allApplications from "../mock/applications.json";
+import allSharedDocuments from "../mock/sharedDocuments.json";
 
+// Hardcoded mentor to intern assignment mapping
 const mentorAssignments = {
   mentor01: ["intern01", "intern02", "intern03"],
   mentor02: ["intern04", "intern06"],
   mentor03: ["intern05", "intern07", "intern09"],
 };
 
+// Simulate API call delay
 const fetchWithDelay = (data, delay = 500) => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -18,8 +22,45 @@ const fetchWithDelay = (data, delay = 500) => {
   });
 };
 
-// --- USER-RELATED FUNCTIONS ---
+//
+// ======================== INTERN FUNCTIONS ============================
+//
 
+/** Get applications for a given intern ID */
+export const getApplicationsByInternId = (internId) => {
+  const applications = allApplications.filter(app => app.internId === internId);
+  return fetchWithDelay(applications);
+};
+
+/** Get tasks assigned to a given intern ID */
+export const getTasksByInternId = (internId) => {
+  const tasks = allTasks.filter(task => task.internId === internId);
+  return fetchWithDelay(tasks);
+};
+
+/** Get meetings scheduled for a given intern ID */
+export const getMeetingsByInternId = (internId) => {
+  const meetings = allMeetings.filter(meeting => meeting.internId === internId);
+  return fetchWithDelay(meetings);
+};
+
+// Get shared documents to a given intern ID / uploaded by mentor ID
+export const getSharedDocuments=({internId,mentorId})=>{
+  const allDocs=allSharedDocuments;
+  let filteredDocs=[];
+  if(internId){
+    filteredDocs=allDocs.filter(doc=>doc.internId===internId);
+  } else if(mentorId){
+    filteredDocs=allDocs.filter(doc=>doc.uploadedBy===mentorId);
+  }
+  return fetchWithDelay(filteredDocs);
+};
+
+//
+// ======================== MENTOR FUNCTIONS ============================
+//
+
+/** Get interns assigned to a mentor */
 export const getInternsByMentorId = (mentorId) => {
   const assignedInternIds = mentorAssignments[mentorId] || [];
   if (assignedInternIds.length === 0) return fetchWithDelay([]);
@@ -31,12 +72,10 @@ export const getInternsByMentorId = (mentorId) => {
   return fetchWithDelay(assignedInterns);
 };
 
-// --- TASK-RELATED FUNCTIONS ---
-
+/** Get tasks submitted by interns assigned to a mentor */
 export const getTasksForMentorReview = (mentorId) => {
   const tasksForMentor = allTasks.filter((task) => task.mentorId === mentorId);
 
-  // Join intern data with task data (like a database JOIN)
   const tasksWithInternInfo = tasksForMentor.map((task) => {
     const intern = allUsers.find((user) => user.id === task.internId);
     return {
@@ -48,14 +87,12 @@ export const getTasksForMentorReview = (mentorId) => {
   return fetchWithDelay(tasksWithInternInfo);
 };
 
-// --- MEETING-RELATED FUNCTIONS ---
-
+/** Get meetings scheduled with interns under a mentor */
 export const getMeetingsByMentorId = (mentorId) => {
   const meetingsForMentor = allMeetings.filter(
     (meeting) => meeting.mentorId === mentorId
   );
 
-  // Join intern data with meeting data
   const meetingsWithInternInfo = meetingsForMentor.map((meeting) => {
     const intern = allUsers.find((user) => user.id === meeting.internId);
     return {
@@ -67,29 +104,24 @@ export const getMeetingsByMentorId = (mentorId) => {
   return fetchWithDelay(meetingsWithInternInfo);
 };
 
-// --- CHAT-RELATED FUNCTIONS ---
-
+/** Get chat conversations of interns under a mentor */
 export const getConversationsForMentor = (mentorId) => {
   const assignedInternIds = mentorAssignments[mentorId] || [];
   const conversations = {};
+
   assignedInternIds.forEach((internId) => {
     conversations[internId] = allConversations[internId] || [];
   });
+
   return fetchWithDelay(conversations);
 };
 
-// --- APPLICATION-RELATED FUNCTIONS ---
-export const getApplicationsByInternId = (internId) => {
-  const applications = allApplications.filter(app => app.internId === internId);
-  return fetchWithDelay(applications);
-};
+//
+// ======================== OPTIONAL EXTENSIONS ============================
+//
 
-export const getTasksByInternId = (internId) => {
-  const tasks = allTasks.filter(task => task.internId === internId);
-  return fetchWithDelay(tasks);
-};
+// Add later if needed:
+// export const getApplicationById = (id) => { ... }
+// export const submitApplication = (data) => { ... }
+// export const getAllInternships = () => { ... }
 
-export const getMeetingsByInternId = (internId) => {
-  const meetings = allMeetings.filter(meeting => meeting.internId === internId);
-  return fetchWithDelay(meetings);
-};

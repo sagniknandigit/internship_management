@@ -1,0 +1,66 @@
+[
+  {
+    "id": "doc001",
+    "internId": "intern01",
+    "title": "Onboarding Guidelines",
+    "fileName": "onboarding_guide_intern01.pdf",
+    "uploadedBy": "mentor01",
+    "uploadedAt": "2024-10-20"
+  },
+  {
+    "id": "doc002",
+    "internId": "intern01",
+    "title": "Final Internship Certificate",
+    "fileName": "certificate_intern01.pdf",
+    "uploadedBy": "mentor01",
+    "uploadedAt": "2025-01-01"
+  },
+  {
+    "id": "doc003",
+    "internId": "intern02",
+    "title": "Internship Rules and Policies",
+    "fileName": "guidelines_intern02.pdf",
+    "uploadedBy": "mentor02",
+    "uploadedAt": "2024-10-25"
+  },
+  {
+    "id": "doc004",
+    "internId": "intern02",
+    "title": "Project Completion Certificate",
+    "fileName": "certificate_intern02.pdf",
+    "uploadedBy": "mentor02",
+    "uploadedAt": "2024-12-29"
+  },
+  {
+    "id": "doc005",
+    "internId": "intern04",
+    "title": "Onboarding Checklist",
+    "fileName": "onboarding_checklist.pdf",
+    "uploadedBy": "mentor01",
+    "uploadedAt": "2024-10-21"
+  },
+  {
+    "id": "doc006",
+    "internId": "intern04",
+    "title": "Final Internship Report",
+    "fileName": "final_report_intern04.pdf",
+    "uploadedBy": "mentor01",
+    "uploadedAt": "2025-01-03"
+  },
+  {
+    "id": "doc007",
+    "internId": "intern05",
+    "title": "Orientation Presentation",
+    "fileName": "orientation_ppt_intern05.pdf",
+    "uploadedBy": "mentor03",
+    "uploadedAt": "2024-10-22"
+  },
+  {
+    "id": "doc008",
+    "internId": "intern05",
+    "title": "Experience Letter",
+    "fileName": "experience_letter_intern05.pdf",
+    "uploadedBy": "mentor03",
+    "uploadedAt": "2025-01-05"
+  }
+]
