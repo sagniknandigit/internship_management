@@ -5,8 +5,8 @@
     "internId": "intern01",
     "mentorId": "mentor01",
     "description": "Install Node.js, VSCode, and clone the GitHub repo to set up the project locally.",
-    "dueDate": "2024-10-30",
-    "submittedDate": "2024-10-25",
+    "dueDate": "2025-11-10",
+    "submittedDate": "2025-11-12",
     "status": "Pending Review"
   },
   {
@@ -15,8 +15,8 @@
     "internId": "intern04",
     "mentorId": "mentor02",
     "description": "Research UI libraries (e.g., Tailwind, Material UI) and document pros and cons.",
-    "dueDate": "2024-10-28",
-    "submittedDate": "2024-10-24",
+    "dueDate": "2025-11-13",
+    "submittedDate": "2025-11-15",
     "status": "Approved"
   },
   {
@@ -25,8 +25,8 @@
     "internId": "intern01",
     "mentorId": "mentor01",
     "description": "Integrate login and registration APIs and test all endpoints.",
-    "dueDate": "2024-10-31",
-    "submittedDate": "2024-10-22",
+    "dueDate": "2025-11-16",
+    "submittedDate": "2025-11-18",
     "status": "Needs Revision"
   },
   {
@@ -35,8 +35,8 @@
     "internId": "intern06",
     "mentorId": "mentor02",
     "description": "Write and validate unit tests for all functions in the authentication module.",
-    "dueDate": "2024-11-01",
-    "submittedDate": "2024-10-26",
+    "dueDate": "2025-11-18",
+    "submittedDate": "2025-11-20",
     "status": "Pending Review"
   },
   {
@@ -45,8 +45,8 @@
     "internId": "intern05",
     "mentorId": "mentor03",
     "description": "Design the ER diagram and define schema for the internship tracking system.",
-    "dueDate": "2024-11-02",
-    "submittedDate": "2024-10-27",
+    "dueDate": "2025-11-20",
+    "submittedDate": "2025-11-22",
     "status": "Pending Review"
   }
 ]

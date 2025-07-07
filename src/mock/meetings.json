@@ -4,7 +4,7 @@
     "title": "Weekly Sync & Project Review",
     "internId": "intern01",
     "mentorId": "mentor01",
-    "date": "2024-11-28",
+    "date": "2025-10-10",
     "time": "11:00 AM",
     "link": "https://meet.google.com/xyz-abc-def",
     "status": "Scheduled"
@@ -14,7 +14,7 @@
     "title": "Database Schema Planning",
     "internId": "intern01",
     "mentorId": "mentor01",
-    "date": "2024-11-15",
+    "date": "2025-06-10",
     "time": "10:00 AM",
     "link": "https://meet.google.com/db-schema-meet",
     "status": "Completed"
@@ -24,7 +24,7 @@
     "title": "API Debugging Session",
     "internId": "intern02",
     "mentorId": "mentor01",
-    "date": "2024-12-01",
+    "date": "2025-11-02",
     "time": "3:00 PM",
     "link": "https://meet.google.com/api-debug",
     "status": "Scheduled"
@@ -34,7 +34,7 @@
     "title": "Internship Introduction",
     "internId": "intern02",
     "mentorId": "mentor01",
-    "date": "2024-10-12",
+    "date": "2025-06-01",
     "time": "9:30 AM",
     "link": "https://meet.google.com/introduction-session",
     "status": "Completed"
@@ -44,7 +44,7 @@
     "title": "Final Review & Handover",
     "internId": "intern03",
     "mentorId": "mentor01",
-    "date": "2024-12-10",
+    "date": "2025-11-05",
     "time": "4:00 PM",
     "link": "https://meet.google.com/final-review",
     "status": "Scheduled"
@@ -54,7 +54,7 @@
     "title": "Cancelled: UI/UX Feedback Call",
     "internId": "intern03",
     "mentorId": "mentor01",
-    "date": "2024-11-18",
+    "date": "2025-06-15",
     "time": "1:00 PM",
     "link": "https://meet.google.com/uiux-feedback",
     "status": "Cancelled"
@@ -64,7 +64,7 @@
     "title": "Tech Stack Orientation",
     "internId": "intern01",
     "mentorId": "mentor01",
-    "date": "2024-10-10",
+    "date": "2025-05-30",
     "time": "2:00 PM",
     "link": "https://meet.google.com/tech-orientation",
     "status": "Completed"
