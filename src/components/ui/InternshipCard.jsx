@@ -68,7 +68,7 @@ const InternshipCard = ({ internship }) => {
       <div className="flex justify-between items-center mt-6">
         <p className="text-sm text-gray-500">Apply by: {applyBy}</p>
         <Link
-          to={`/internships/${id}`} // This will link to the detail page later
+          to={`/internships/${id}`}
           className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition"
         >
           View Details

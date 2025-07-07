@@ -12,7 +12,7 @@ const StatusBadge = ({ status }) => {
     'Needs Revision': 'bg-red-100 text-red-800',
   };
 
-  const style = statusStyles[status] || 'bg-gray-100 text-gray-800';
+  const style = statusStyles[status] || 'bg-red-100 text-red-800';
 
   return (
     <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${style}`}>

@@ -1,52 +1,65 @@
+// src/pages/Admin/Dashboard.jsx
 import React, { useEffect, useState } from "react";
-import StatsCard from "../../components/admin/StatsCard";
-import InternshipCard from "../../components/admin/InternshipCard";
-import internshipsData from "../../mock/internship.json";
+import internships from "../../mock/internshipstats.json";
 import users from "../../mock/user.json";
+import InternshipCard from "../../components/admin/AdminInternshipCard";
+import StatCard from "../../components/admin/StatsCard";
+import Sidebar from "../../components/layout/Sidebar";
 
 const Dashboard = () => {
-  const [internships, setInternships] = useState([]);
-  const [mentorsCount, setMentorsCount] = useState(0);
-  const [internsCount, setInternsCount] = useState(0);
-  const [activeInternshipsCount, setActiveInternshipsCount] = useState(0);
+  const [internshipData, setInternshipData] = useState([]);
+  const [userData, setUserData] = useState([]);
 
   useEffect(() => {
-    // Load internships from mock JSON
-    setInternships(internshipsData);
-
-    // Count mentors and interns from user data
-    const mentors = users.filter((user) => user.role === "Mentor");
-    const interns = users.filter((user) => user.role === "Intern");
-
-    setMentorsCount(mentors.length);
-    setInternsCount(interns.length);
-
-    const activeInternships = internshipsData.filter((job) => job.active);
-    setActiveInternshipsCount(activeInternships.length);
+    setInternshipData(internships);
+    setUserData(users);
   }, []);
 
+  const mentorCount = userData.filter((u) => u.role === "Mentor").length;
+  const internCount = userData.filter((u) => u.role === "Intern").length;
+  const activeInternshipCount = internshipData.filter(
+    (i) => i.active === true && i.closed === false
+  ).length;
+
   return (
-    <div className="space-y-8">
-      <h1 className="text-3xl font-semibold text-gray-800">Admin Dashboard</h1>
+    <div className="flex">
+      {/* Sidebar */}
+      <Sidebar />
 
-      {/* Stats cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <StatsCard title="Total Mentors" count={mentorsCount} icon="mentor" />
-        <StatsCard title="Total Interns" count={internsCount} icon="intern" />
-        <StatsCard title="Active Listings" count={activeInternshipsCount} icon="internship" />
-      </div>
-
-      {/* Internship Listing */}
-      <div className="mt-8">
-        <h2 className="text-2xl font-semibold text-gray-700 mb-4">
-          Internship & Job Listings
-        </h2>
-        <div className="grid grid-cols-1 gap-4">
-          {internships.map((job) => (
-            <InternshipCard key={job.id} internship={job} />
-          ))}
+      {/* Main Content */}
+      <main className="flex-1 p-6 space-y-6 bg-gray-50">
+        {/* Stat Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <StatCard
+            title="Mentors"
+            count={mentorCount}
+            color="blue"
+            icon="mentor"
+          />
+          <StatCard
+            title="Interns"
+            count={internCount}
+            color="green"
+            icon="intern"
+          />
+          <StatCard
+            title="Active Internships"
+            count={activeInternshipCount}
+            color="purple"
+            icon="internship"
+          />
         </div>
-      </div>
+
+        {/* Internship Listing */}
+        <div className="space-y-4">
+          <h2 className="text-xl font-bold text-gray-700">All Listings</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {internships.map((internship) => (
+              <InternshipCard key={internship.id} internship={internship} />
+            ))}
+          </div>
+        </div>
+      </main>
     </div>
   );
 };

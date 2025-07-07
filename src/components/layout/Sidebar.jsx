@@ -14,6 +14,7 @@ import {
   IoLogOutOutline,
   IoPeopleOutline,
   IoFileTrayFullOutline,
+  IoAnalyticsOutline,
 } from "react-icons/io5";
 
 const Sidebar = () => {
@@ -24,7 +25,6 @@ const Sidebar = () => {
   useEffect(() => {
     if (!user) return;
 
-    // Define navigation items for each role
     const internNavItems = [
       { to: "/intern/dashboard", icon: IoGridOutline, label: "Dashboard" },
       {
@@ -67,18 +67,42 @@ const Sidebar = () => {
         icon: IoFileTrayFullOutline,
         label: "Review Tasks",
       },
-      {to: "/mentor/documents", icon: IoDocumentTextOutline, label: "Upload Documents"},
+      {
+        to: "/mentor/documents",
+        icon: IoDocumentTextOutline,
+        label: "Upload Documents",
+      },
       { to: "/mentor/meetings", icon: IoVideocamOutline, label: "Meetings" },
       { to: "/mentor/chat", icon: IoChatbubblesOutline, label: "Chats" },
     ];
 
-    // Set the navigation items based on the user's role
+    const adminNavItems = [
+      { to: "/admin/dashboard", icon: IoGridOutline, label: "Dashboard" },
+      {
+        to: "/admin/manage-applications",
+        icon: IoDocumentTextOutline,
+        label: "Applications",
+      },
+      {
+        to: "/admin/post-internship",
+        icon: IoBriefcaseOutline,
+        label: "Post Internship",
+      },
+      {
+        to: "/admin/interview-scheduler",
+        icon: IoVideocamOutline,
+        label: "Interviews",
+      },
+      { to: "/admin/reports", icon: IoAnalyticsOutline, label: "Reports" },
+    ];
+
     if (user.role === "Intern") {
       setNavItems(internNavItems);
     } else if (user.role === "Mentor") {
       setNavItems(mentorNavItems);
+    } else if (user.role === "Admin") {
+      setNavItems(adminNavItems);
     }
-    // Add other roles like 'Admin' here if needed
   }, [user]);
 
   const handleLogout = () => {
@@ -86,15 +110,17 @@ const Sidebar = () => {
     navigate("/login");
   };
 
-  // --- Reusable Tailwind classes ---
   const baseLinkClass =
     "flex items-center px-4 py-3 text-indigo-100 rounded-lg hover:bg-indigo-700 hover:text-white transition-colors duration-200";
   const activeLinkClass =
     "bg-indigo-950 bg-opacity-50 text-white font-semibold";
 
-  // Determine the settings link based on role
   const settingsLink =
-    user?.role === "Intern" ? "/intern/settings" : "/mentor/settings";
+    user?.role === "Intern"
+      ? "/intern/settings"
+      : user?.role === "Mentor"
+      ? "/mentor/settings"
+      : "/admin/settings";
 
   return (
     <div className="flex flex-col w-64 h-full bg-indigo-800 text-white">
@@ -111,7 +137,7 @@ const Sidebar = () => {
           <NavLink
             key={item.to}
             to={item.to}
-            end={item.to.endsWith("/dashboard")} // Ensure only dashboard is 'end'
+            end={item.to.endsWith("/dashboard")}
             className={({ isActive }) =>
               `${baseLinkClass} ${isActive ? activeLinkClass : ""}`
             }
@@ -122,7 +148,7 @@ const Sidebar = () => {
         ))}
       </nav>
 
-      {/* Bottom Settings and Logout Section */}
+      {/* Bottom Settings and Logout */}
       <div className="px-4 py-4 border-t border-indigo-700 space-y-2">
         <NavLink
           to={settingsLink}
