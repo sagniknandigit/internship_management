@@ -1,0 +1,85 @@
+[
+    {
+        "id": "int001",
+        "title": "Frontend Developer Intern",
+        "applicationCount": 2,
+        "applicants": [
+            "Aarav Kumar",
+            "Isha Verma"
+        ],
+        "active": true,
+        "closed": false,
+        "listingType": "Internship"
+    },
+    {
+        "id": "int002",
+        "title": "Backend Developer Intern (PHP/Laravel)",
+        "applicationCount": 1,
+        "applicants": [
+            "Siya Singh"
+        ],
+        "active": true,
+        "closed": false,
+        "listingType": "Internship"
+    },
+    {
+        "id": "int003",
+        "title": "UI/UX Design Intern",
+        "applicationCount": 1,
+        "applicants": [
+            "Siya Singh"
+        ],
+        "active": false,
+        "closed": true,
+        "listingType": "Internship"
+    },
+    {
+        "id": "int004",
+        "title": "Digital Marketing Intern",
+        "applicationCount": 1,
+        "applicants": [
+            "Isha Verma"
+        ],
+        "active": true,
+        "closed": false,
+        "listingType": "Internship"
+    },
+    {
+        "id": "int005",
+        "title": "Data Science Intern",
+        "applicationCount": 1,
+        "applicants": [
+            "Aarav Kumar"
+        ],
+        "active": true,
+        "closed": false,
+        "listingType": "Internship"
+    },
+    {
+        "id": "int006",
+        "title": "Content Writing Intern",
+        "applicationCount": 0,
+        "applicants": [],
+        "active": true,
+        "closed": false,
+        "listingType": "Internship"
+    },
+    {
+        "id": "int007",
+        "title": "Cybersecurity Intern",
+        "applicationCount": 0,
+        "applicants": [],
+        "active": true,
+        "closed": false,
+        "listingType": "Internship"
+    },
+    {
+        "id": "int008",
+        "title": "AI Research Intern",
+        "applicationCount": 0,
+        "applicants": [],
+        "active": true,
+        "closed": false,
+        "listingType": "Internship"
+    }
+]

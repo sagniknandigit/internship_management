@@ -6,6 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import MainLayout from "../layouts/MainLayout";
 import InternLayout from "../layouts/InternLayout";
 import MentorLayout from "../layouts/MentorLayout";
+import AdminLayout from "../layouts/AdminLayout";
 
 // General Pages
 import HomePage from "../pages/Home";
@@ -69,13 +70,13 @@ const AppRoutes = () => {
       >
         <Route index element={<Navigate to="dashboard" replace />} />
         <Route path="dashboard" element={<InternDashboard />} />
-        <Route path="apply" element={<ApplyForm/>}/>
+        <Route path="apply" element={<ApplyForm />} />
         <Route path="applications" element={<MyApplications />} />
         <Route path="tasks" element={<MyTasks />} />
         <Route path="documents" element={<Documents />} />
-        <Route path="chat" element={<Chat/>} />
-        <Route path="meetings" element={<Meetings/>} />
-        <Route path="settings" element={<Settings/>} />
+        <Route path="chat" element={<Chat />} />
+        <Route path="meetings" element={<Meetings />} />
+        <Route path="settings" element={<Settings />} />
       </Route>
 
       {/* Mentor Route Group - CORRECTED */}
@@ -91,7 +92,7 @@ const AppRoutes = () => {
         <Route path="dashboard" element={<MentorDashboard />} />
         <Route path="interns" element={<AssignedInterns />} />
         <Route path="tasks" element={<ReviewTasks />} />
-        <Route path="documents" element={<MentorDocuments/>} />
+        <Route path="documents" element={<MentorDocuments />} />
         <Route path="meetings" element={<MentorMeetings />} />{" "}
         <Route path="chat" element={<MentorChat />} />
         <Route path="settings" element={<MentorSettings />} />
@@ -99,13 +100,15 @@ const AppRoutes = () => {
 
       {/* Admin Route Group */}
       <Route
-        path="/admin/dashboard"
+        path="/admin"
         element={
           <ProtectedRoute roles={["Admin"]}>
-            <AdminDashboard />
+            <AdminLayout />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route path="dashboard" element={<AdminDashboard />} />
+      </Route>
 
       {/* Not Found Route - must be last */}
       <Route path="*" element={<NotFoundPage />} />

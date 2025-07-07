@@ -27,10 +27,8 @@ const Navbar = () => {
   };
 
   const getFirstName = (fullName) => {
-    if (!fullName) {
-      return ''; 
-    }
-    return fullName.split(' ')[0]; 
+    if (!fullName) return "";
+    return fullName.split(" ")[0];
   };
 
   const renderAuthLinks = () => {
@@ -91,9 +89,7 @@ const Navbar = () => {
               </span>
             </Link>
           </div>
-          <div className="flex items-center space-x-4">
-            {renderAuthLinks()}
-          </div>
+          <div className="flex items-center space-x-4">{renderAuthLinks()}</div>
         </div>
       </div>
     </nav>
