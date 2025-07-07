@@ -19,9 +19,9 @@ import InternshipsPage from "../pages/InternshipsPage";
 import AdminLoginPage from "../pages/Admin/AdminLoginPage";
 import AdminDashboard from "../pages/Admin/Dashboard";
 
-// Intern Pages (using 'as' to avoid naming conflicts)
+// Intern Pages
 import InternDashboard from "../pages/Intern/Dashboard";
-import ApplyForm from "../pages/Intern/ApplyForm";
+import ApplyForm from "../pages/Intern/ApplyForm"; // ✅ includes internshipId
 import MyApplications from "../pages/Intern/MyApplications";
 import MyTasks from "../pages/Intern/MyTasks";
 import Documents from "../pages/Intern/Documents";
@@ -29,7 +29,7 @@ import Chat from "../pages/Intern/Chat";
 import Settings from "../pages/Intern/Settings";
 import Meetings from "../pages/Intern/Meetings";
 
-// Mentor Pages -- IMPORT THE NEW PAGES
+// Mentor Pages
 import MentorDashboard from "../pages/Mentor/Dashboard";
 import AssignedInterns from "../pages/Mentor/AssignedInterns";
 import ReviewTasks from "../pages/Mentor/ReviewTasks";
@@ -44,21 +44,19 @@ import ProtectedRoute from "./ProtectedRoutes";
 const AppRoutes = () => {
   return (
     <Routes>
-      {/* Public auth routes */}
+      {/* Public Routes */}
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/admin/login" element={<AdminLoginPage />} />
       <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
-      {/* Main public-facing layout */}
+      {/* Main Public Layout */}
       <Route element={<MainLayout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/internships" element={<InternshipsPage />} />
       </Route>
 
-      {/* --- PROTECTED ROUTE GROUPS --- */}
-
-      {/* Intern Route Group */}
+      {/* Intern Routes */}
       <Route
         path="/intern"
         element={
@@ -69,16 +67,16 @@ const AppRoutes = () => {
       >
         <Route index element={<Navigate to="dashboard" replace />} />
         <Route path="dashboard" element={<InternDashboard />} />
-        <Route path="apply" element={<ApplyForm/>}/>
+        <Route path="apply/:internshipId" element={<ApplyForm />} />
         <Route path="applications" element={<MyApplications />} />
         <Route path="tasks" element={<MyTasks />} />
         <Route path="documents" element={<Documents />} />
-        <Route path="chat" element={<Chat/>} />
-        <Route path="meetings" element={<Meetings/>} />
-        <Route path="settings" element={<Settings/>} />
+        <Route path="chat" element={<Chat />} />
+        <Route path="meetings" element={<Meetings />} />
+        <Route path="settings" element={<Settings />} />
       </Route>
 
-      {/* Mentor Route Group - CORRECTED */}
+      {/* Mentor Routes */}
       <Route
         path="/mentor"
         element={
@@ -91,13 +89,13 @@ const AppRoutes = () => {
         <Route path="dashboard" element={<MentorDashboard />} />
         <Route path="interns" element={<AssignedInterns />} />
         <Route path="tasks" element={<ReviewTasks />} />
-        <Route path="documents" element={<MentorDocuments/>} />
-        <Route path="meetings" element={<MentorMeetings />} />{" "}
+        <Route path="documents" element={<MentorDocuments />} />
+        <Route path="meetings" element={<MentorMeetings />} />
         <Route path="chat" element={<MentorChat />} />
         <Route path="settings" element={<MentorSettings />} />
       </Route>
 
-      {/* Admin Route Group */}
+      {/* Admin Dashboard */}
       <Route
         path="/admin/dashboard"
         element={
@@ -107,7 +105,7 @@ const AppRoutes = () => {
         }
       />
 
-      {/* Not Found Route - must be last */}
+      {/* Catch-All */}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
