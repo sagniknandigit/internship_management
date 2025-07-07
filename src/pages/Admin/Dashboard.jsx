@@ -24,7 +24,6 @@ const Dashboard = () => {
   return (
     <div className="flex">
       {/* Sidebar */}
-      <Sidebar />
 
       {/* Main Content */}
       <main className="flex-1 p-6 space-y-6 bg-gray-50">

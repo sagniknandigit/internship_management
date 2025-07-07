@@ -13,9 +13,6 @@ const getInitials = (name = "") => {
 
 const ProfileAvatar = ({ user, size = "lg" }) => {
   if (!user) return null;
-
-  // --- SOLUTION 1: Map a simple prop to actual Tailwind classes ---
-  // This ensures Tailwind's JIT compiler can see the full class names.
   const sizeClasses = {
     sm: "h-8 w-8 text-xs",
     md: "h-12 w-12 text-sm",
@@ -23,6 +20,7 @@ const ProfileAvatar = ({ user, size = "lg" }) => {
   };
 
   const initials = getInitials(user.name);
+  console.log("ProfileAvatar user:", user.profilePictureUrl);
   const containerSizeClass = sizeClasses[size] || sizeClasses["lg"];
 
   return (

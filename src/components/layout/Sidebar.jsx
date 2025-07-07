@@ -123,15 +123,13 @@ const Sidebar = () => {
       : "/admin/settings";
 
   return (
-    <div className="flex flex-col w-64 h-full bg-indigo-800 text-white">
-      {/* Profile Section */}
+    <div className="flex flex-col w-64 min-h-screen bg-indigo-800 text-white overflow-y-auto">
       <div className="flex flex-col items-center p-4 mt-4">
         <ProfileAvatar user={user} size="lg" />
         <p className="mt-3 text-lg font-semibold">{user?.name}</p>
         <p className="text-sm text-indigo-300">{user?.role}</p>
       </div>
 
-      {/* Dynamic Navigation */}
       <nav className="flex-1 px-4 py-4 mt-4 space-y-2">
         {navItems.map((item) => (
           <NavLink
@@ -148,7 +146,6 @@ const Sidebar = () => {
         ))}
       </nav>
 
-      {/* Bottom Settings and Logout */}
       <div className="px-4 py-4 border-t border-indigo-700 space-y-2">
         <NavLink
           to={settingsLink}
