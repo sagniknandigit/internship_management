@@ -1,10 +1,8 @@
-// src/pages/Admin/Dashboard.jsx
 import React, { useEffect, useState } from "react";
 import internships from "../../mock/internshipstats.json";
 import users from "../../mock/user.json";
 import InternshipCard from "../../components/admin/AdminInternshipCard";
 import StatCard from "../../components/admin/StatsCard";
-import Sidebar from "../../components/layout/Sidebar";
 
 const Dashboard = () => {
   const [internshipData, setInternshipData] = useState([]);
@@ -23,9 +21,6 @@ const Dashboard = () => {
 
   return (
     <div className="flex">
-      {/* Sidebar */}
-
-      {/* Main Content */}
       <main className="flex-1 p-6 space-y-6 bg-gray-50">
         {/* Stat Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

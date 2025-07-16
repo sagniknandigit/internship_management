@@ -19,10 +19,15 @@ import InternshipsPage from "../pages/InternshipsPage";
 // Admin Pages
 import AdminLoginPage from "../pages/Admin/AdminLoginPage";
 import AdminDashboard from "../pages/Admin/Dashboard";
+import ManageApplications from "../pages/Admin/ManageApplications";
+import PostInternship from "../pages/Admin/PostInternship";
+import InterviewScheduler from "../pages/Admin/InterviewScheduler";
+import Reports from "../pages/Admin/Reports";
+import AdminSettings from "../pages/Admin/AdminSettings";
 
 // Intern Pages
 import InternDashboard from "../pages/Intern/Dashboard";
-import ApplyForm from "../pages/Intern/ApplyForm"; // ✅ includes internshipId
+import ApplyForm from "../pages/Intern/ApplyForm";
 import MyApplications from "../pages/Intern/MyApplications";
 import MyTasks from "../pages/Intern/MyTasks";
 import Documents from "../pages/Intern/Documents";
@@ -90,7 +95,7 @@ const AppRoutes = () => {
         <Route path="dashboard" element={<MentorDashboard />} />
         <Route path="interns" element={<AssignedInterns />} />
         <Route path="tasks" element={<ReviewTasks />} />
-        <Route path="documents" element={<MentorDocuments/>} />
+        <Route path="documents" element={<MentorDocuments />} />
         <Route path="meetings" element={<MentorMeetings />} />{" "}
         <Route path="chat" element={<MentorChat />} />
         <Route path="settings" element={<MentorSettings />} />
@@ -105,7 +110,13 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       >
+        <Route index element={<Navigate to="dashboard" replace />} />
         <Route path="dashboard" element={<AdminDashboard />} />
+        <Route path="manage-applications" element={<ManageApplications />} />
+        <Route path="post-internship" element={<PostInternship />} />
+        <Route path="interview-scheduler" element={<InterviewScheduler />} />
+        <Route path="reports" element={<Reports />} />
+        <Route path="settings" element={<AdminSettings />} />
       </Route>
 
       {/* Catch-All */}
