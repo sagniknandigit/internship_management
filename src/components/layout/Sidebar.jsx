@@ -79,6 +79,16 @@ const Sidebar = () => {
     const adminNavItems = [
       { to: "/admin/dashboard", icon: IoGridOutline, label: "Dashboard" },
       {
+        to: "/admin/all-internships",
+        icon: IoFileTrayFullOutline,
+        label: "All Internships",
+      },
+      {
+        to: "/admin/manage-users",
+        icon: IoPeopleOutline,
+        label: "Manage Users",
+      },
+      {
         to: "/admin/manage-applications",
         icon: IoDocumentTextOutline,
         label: "Applications",

@@ -1,33 +1,29 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import Spinner from "../components/ui/Spinner";
+import Spinner from "../components/ui/Spinner"; // Assuming you have a spinner component
 
 const ProtectedRoute = ({ children, roles }) => {
-  const { isAuthenticated, user, loading } = useAuth();
+  const { user, loading } = useAuth();
   const location = useLocation();
 
-  // 1. Handle the initial loading state
+
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex h-screen w-full items-center justify-center bg-gray-100">
         <Spinner />
       </div>
     );
   }
 
-  // 2. If not authenticated, redirect to the login page
-  if (!isAuthenticated) {
-    // Save the location they were trying to go to, so we can redirect them back
+  if (!user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // 3. If authenticated but role is not authorized, show an unauthorized message
   if (roles && !roles.includes(user.role)) {
     return <Navigate to="/unauthorized" replace />;
   }
 
-  // 4. If authenticated and authorized, render the child component
   return children;
 };
 

@@ -78,8 +78,91 @@
         "title": "AI Research Intern",
         "applicationCount": 0,
         "applicants": [],
+        "active": false,
+        "closed": true,
+        "listingType": "Internship"
+    },
+    {
+        "id": "int009",
+        "title": "Frontend Developer Intern",
+        "applicationCount": 2,
+        "applicants": [
+            "Aarav Kumar",
+            "Isha Verma"
+        ],
         "active": true,
         "closed": false,
+        "listingType": "Internship"
+    },
+    {
+        "id": "int010",
+        "title": "Backend Developer Intern (PHP/Laravel)",
+        "applicationCount": 1,
+        "applicants": [
+            "Siya Singh"
+        ],
+        "active": true,
+        "closed": false,
+        "listingType": "Internship"
+    },
+    {
+        "id": "int011",
+        "title": "UI/UX Design Intern",
+        "applicationCount": 1,
+        "applicants": [
+            "Siya Singh"
+        ],
+        "active": false,
+        "closed": true,
+        "listingType": "Internship"
+    },
+    {
+        "id": "int012",
+        "title": "Digital Marketing Intern",
+        "applicationCount": 1,
+        "applicants": [
+            "Isha Verma"
+        ],
+        "active": true,
+        "closed": false,
+        "listingType": "Internship"
+    },
+    {
+        "id": "int013",
+        "title": "Data Science Intern",
+        "applicationCount": 1,
+        "applicants": [
+            "Aarav Kumar"
+        ],
+        "active": true,
+        "closed": false,
+        "listingType": "Internship"
+    },
+    {
+        "id": "int014",
+        "title": "Content Writing Intern",
+        "applicationCount": 0,
+        "applicants": [],
+        "active": true,
+        "closed": false,
+        "listingType": "Internship"
+    },
+    {
+        "id": "int015",
+        "title": "Cybersecurity Intern",
+        "applicationCount": 0,
+        "applicants": [],
+        "active": true,
+        "closed": false,
+        "listingType": "Internship"
+    },
+    {
+        "id": "int016",
+        "title": "AI Research Intern",
+        "applicationCount": 0,
+        "applicants": [],
+        "active": false,
+        "closed": true,
         "listingType": "Internship"
     }
 ]

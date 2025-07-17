@@ -24,6 +24,8 @@ import PostInternship from "../pages/Admin/PostInternship";
 import InterviewScheduler from "../pages/Admin/InterviewScheduler";
 import Reports from "../pages/Admin/Reports";
 import AdminSettings from "../pages/Admin/AdminSettings";
+import AllInternships from "../pages/Admin/AllInternships";
+import ManageUsers from "../pages/Admin/ManageUsers";
 
 // Intern Pages
 import InternDashboard from "../pages/Intern/Dashboard";
@@ -112,6 +114,8 @@ const AppRoutes = () => {
       >
         <Route index element={<Navigate to="dashboard" replace />} />
         <Route path="dashboard" element={<AdminDashboard />} />
+        <Route path="all-internships" element={<AllInternships />} />
+        <Route path="manage-users" element={<ManageUsers />} />
         <Route path="manage-applications" element={<ManageApplications />} />
         <Route path="post-internship" element={<PostInternship />} />
         <Route path="interview-scheduler" element={<InterviewScheduler />} />
