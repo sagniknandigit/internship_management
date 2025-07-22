@@ -1,6 +1,8 @@
+// src/routes/AppRoutes.jsx
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import ScrollToTop from "../components/layout/ScrollToTop"; // Import ScrollToTop component
 
 // Layouts
 import MainLayout from "../layouts/MainLayout";
@@ -51,81 +53,82 @@ import ProtectedRoute from "./ProtectedRoutes";
 
 const AppRoutes = () => {
   return (
-    <Routes>
-      {/* Public Routes */}
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
-      <Route path="/admin/login" element={<AdminLoginPage />} />
-      <Route path="/unauthorized" element={<UnauthorizedPage />} />
-
-      {/* Main Public Layout */}
-      <Route element={<MainLayout />}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/internships" element={<InternshipsPage />} />
-      </Route>
-
-      {/* Intern Routes */}
-      <Route
-        path="/intern"
-        element={
-          <ProtectedRoute roles={["Intern"]}>
-            <InternLayout />
-          </ProtectedRoute>
-        }
-      >
-        <Route index element={<Navigate to="dashboard" replace />} />
-        <Route path="dashboard" element={<InternDashboard />} />
-        <Route path="apply/:internshipId" element={<ApplyForm />} />
-        <Route path="applications" element={<MyApplications />} />
-        <Route path="tasks" element={<MyTasks />} />
-        <Route path="documents" element={<Documents />} />
-        <Route path="chat" element={<Chat />} />
-        <Route path="meetings" element={<Meetings />} />
-        <Route path="settings" element={<Settings />} />
-      </Route>
-
-      {/* Mentor Routes */}
-      <Route
-        path="/mentor"
-        element={
-          <ProtectedRoute roles={["Mentor"]}>
-            <MentorLayout />
-          </ProtectedRoute>
-        }
-      >
-        <Route index element={<Navigate to="dashboard" replace />} />
-        <Route path="dashboard" element={<MentorDashboard />} />
-        <Route path="interns" element={<AssignedInterns />} />
-        <Route path="tasks" element={<ReviewTasks />} />
-        <Route path="documents" element={<MentorDocuments />} />
-        <Route path="meetings" element={<MentorMeetings />} />{" "}
-        <Route path="chat" element={<MentorChat />} />
-        <Route path="settings" element={<MentorSettings />} />
-      </Route>
-
-      {/* Admin Dashboard */}
-      <Route
-        path="/admin"
-        element={
-          <ProtectedRoute roles={["Admin"]}>
-            <AdminLayout />
-          </ProtectedRoute>
-        }
-      >
-        <Route index element={<Navigate to="dashboard" replace />} />
-        <Route path="dashboard" element={<AdminDashboard />} />
-        <Route path="all-internships" element={<AllInternships />} />
-        <Route path="manage-users" element={<ManageUsers />} />
-        <Route path="manage-applications" element={<ManageApplications />} />
-        <Route path="post-internship" element={<PostInternship />} />
-        <Route path="interview-scheduler" element={<InterviewScheduler />} />
-        <Route path="reports" element={<Reports />} />
-        <Route path="settings" element={<AdminSettings />} />
-      </Route>
-
-      {/* Catch-All */}
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+    <>
+      {" "}
+      {/* Use a React Fragment if you need a single parent element */}
+      <ScrollToTop /> {/* Place ScrollToTop here, as a sibling to Routes */}
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />{" "}
+        {/* Corrected typo: remove extra /register" element */}
+        <Route path="/admin/login" element={<AdminLoginPage />} />
+        <Route path="/unauthorized" element={<UnauthorizedPage />} />
+        {/* Main Public Layout */}
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/internships" element={<InternshipsPage />} />
+        </Route>
+        {/* Intern Routes */}
+        <Route
+          path="/intern"
+          element={
+            <ProtectedRoute roles={["Intern"]}>
+              <InternLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route path="dashboard" element={<InternDashboard />} />
+          <Route path="apply/:internshipId" element={<ApplyForm />} />
+          <Route path="applications" element={<MyApplications />} />
+          <Route path="tasks" element={<MyTasks />} />
+          <Route path="documents" element={<Documents />} />
+          <Route path="chat" element={<Chat />} />
+          <Route path="meetings" element={<Meetings />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
+        {/* Mentor Routes */}
+        <Route
+          path="/mentor"
+          element={
+            <ProtectedRoute roles={["Mentor"]}>
+              <MentorLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route path="dashboard" element={<MentorDashboard />} />
+          <Route path="interns" element={<AssignedInterns />} />
+          <Route path="tasks" element={<ReviewTasks />} />
+          <Route path="documents" element={<MentorDocuments />} />
+          <Route path="meetings" element={<MentorMeetings />} />{" "}
+          <Route path="chat" element={<MentorChat />} />
+          <Route path="settings" element={<MentorSettings />} />
+        </Route>
+        {/* Admin Dashboard */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute roles={["Admin"]}>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="all-internships" element={<AllInternships />} />
+          <Route path="manage-users" element={<ManageUsers />} />
+          <Route path="manage-applications" element={<ManageApplications />} />
+          <Route path="post-internship" element={<PostInternship />} />
+          <Route path="interview-scheduler" element={<InterviewScheduler />} />
+          <Route path="reports" element={<Reports />} />
+          <Route path="settings" element={<AdminSettings />} />
+        </Route>
+        {/* Catch-All */}
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </>
   );
 };
 

@@ -133,43 +133,44 @@ const Sidebar = () => {
       : "/admin/settings";
 
   return (
-    <div className="flex flex-col w-64 min-h-screen bg-indigo-800 text-white overflow-y-auto">
+    <div className="flex flex-col w-64 min-h-screen h-dvh fixed bg-indigo-800 text-white overflow-y-auto justify-start hide-scrollbar">
       <div className="flex flex-col items-center p-4 mt-4">
         <ProfileAvatar user={user} size="lg" />
         <p className="mt-3 text-lg font-semibold">{user?.name}</p>
         <p className="text-sm text-indigo-300">{user?.role}</p>
       </div>
+      <div>
+        <nav className="flex-1 px-4 py-2 mt-2 space-y-2 ">
+          {navItems.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.to.endsWith("/dashboard")}
+              className={({ isActive }) =>
+                `${baseLinkClass} ${isActive ? activeLinkClass : ""}`
+              }
+            >
+              <item.icon className="h-5 w-5 mr-3" />
+              <span>{item.label}</span>
+            </NavLink>
+          ))}
+        </nav>
 
-      <nav className="flex-1 px-4 py-4 mt-4 space-y-2">
-        {navItems.map((item) => (
+        <div className="px-4 py-4 border-t border-indigo-700 space-y-2">
           <NavLink
-            key={item.to}
-            to={item.to}
-            end={item.to.endsWith("/dashboard")}
+            to={settingsLink}
             className={({ isActive }) =>
               `${baseLinkClass} ${isActive ? activeLinkClass : ""}`
             }
           >
-            <item.icon className="h-5 w-5 mr-3" />
-            <span>{item.label}</span>
+            <IoSettingsOutline className="h-5 w-5 mr-3" />
+            <span>Settings</span>
           </NavLink>
-        ))}
-      </nav>
-
-      <div className="px-4 py-4 border-t border-indigo-700 space-y-2">
-        <NavLink
-          to={settingsLink}
-          className={({ isActive }) =>
-            `${baseLinkClass} ${isActive ? activeLinkClass : ""}`
-          }
-        >
-          <IoSettingsOutline className="h-5 w-5 mr-3" />
-          <span>Settings</span>
-        </NavLink>
-        <button onClick={handleLogout} className={`${baseLinkClass} w-full`}>
-          <IoLogOutOutline className="h-5 w-5 mr-3" />
-          <span>Logout</span>
-        </button>
+          <button onClick={handleLogout} className={`${baseLinkClass} w-full`}>
+            <IoLogOutOutline className="h-5 w-5 mr-3" />
+            <span>Logout</span>
+          </button>
+        </div>
       </div>
     </div>
   );
