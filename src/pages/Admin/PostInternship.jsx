@@ -112,9 +112,25 @@ const PostInternship = () => {
         skills: formData.skills, // skills is already an array of strings
       };
 
-      // Add the new internship
+      // Add the new internship to the main internships list
       const updatedInternships = [...existingInternships, newInternship];
       saveData("internships", updatedInternships);
+
+      // --- Update internshipStats.json with the new internship's stats entry ---
+      const currentStatsArray = getData("internshipStats") || []; // Get existing stats array, or an empty array if none
+
+      const newInternshipStatEntry = {
+        id: newInternship.id, // Use the ID from the newly posted internship
+        title: newInternship.title, // Use the title from the newly posted internship
+        applicationCount: 0,
+        applicants: [],
+        active: true,
+        closed: false,
+        listingType: "Internship",
+      };
+      const updatedStatsArray = [...currentStatsArray, newInternshipStatEntry];
+      saveData("internshipStats", updatedStatsArray);
+      // --- End of internshipStats.json update ---
 
       setSuccessMessage("Internship posted successfully!");
       // Clear the form fields and reset select components and checkbox
