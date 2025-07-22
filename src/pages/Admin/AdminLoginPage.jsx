@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+// import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext"; // Import the AuthContext to use the login function
 import Spinner from "../../components/ui/Spinner";
 
 const AdminLoginPage = () => {
@@ -20,35 +21,42 @@ const AdminLoginPage = () => {
     setLoading(true);
 
     try {
-      // The login function now returns the user data directly
-      const { user } = await auth.login(formData.email, formData.password);
+      // The login function from AuthContext will return the user data directly on success
+      // It also handles throwing an error if the user is suspended.
+      const user = await auth.login(formData.email, formData.password);
 
       // Now we can reliably redirect based on the returned user's role
       if (user.role === "Admin") {
         navigate("/admin/dashboard");
       } else {
-        // This case handles if a non-admin user tries to log in via the admin page
+        // This case handles if a non-admin user (e.g., Intern or Mentor) tries to log in via the admin page
         setError("Access Denied. This portal is for administrators only.");
-        auth.logout(); // Log them out immediately
+        auth.logout(); // Log them out immediately as they tried to access the wrong portal
       }
     } catch (err) {
-      // This will catch errors like invalid credentials from the authService
-      setError(err.message || "Invalid credentials or server error.");
+      // This will catch errors from authService, including "Invalid email or password."
+      // or "Your account has been suspended..."
+      setError(
+        err.message || "An unexpected error occurred. Please try again."
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-800 flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-8">
+    <div className="min-h-screen bg-red-500/20 flex items-center justify-center p-4">
+      {" "}
+      {/* Changed background to bg-gray-50 for consistency */}
+      <div className="max-w-md w-full bg-white shadow-md rounded-lg p-8 border-2 border-indigo-100">
+        {" "}
+        {/* Added indigo border for consistency */}
         <h2 className="text-2xl font-bold text-center text-gray-900 mb-2">
           Admin Portal
         </h2>
         <p className="text-center text-gray-600 mb-6">
           Please log in to continue.
         </p>
-
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700 mb-2" htmlFor="email">
@@ -61,7 +69,8 @@ const AdminLoginPage = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="input-field w-full"
+              placeholder="example@email.com"
             />
           </div>
           <div className="mb-6">
@@ -75,12 +84,30 @@ const AdminLoginPage = () => {
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="input-field w-full"
+              placeholder="Enter your password"
             />
           </div>
 
           {error && (
-            <p className="text-red-500 text-sm text-center mb-4">{error}</p>
+            <p
+              className={`text-red-500 text-sm text-center mb-4 ${
+                error.includes("suspended") ? "font-bold" : ""
+              }`}
+            >
+              {error}
+              {error.includes("suspended") && (
+                <span className="block mt-1">
+                  Contact admin at{" "}
+                  <a
+                    href="mailto:admin@aninex.com"
+                    className="text-indigo-600 hover:underline"
+                  >
+                    admin@aninex.com
+                  </a>
+                </span>
+              )}
+            </p>
           )}
 
           <button
@@ -93,7 +120,7 @@ const AdminLoginPage = () => {
         </form>
         <p className="text-center text-sm text-gray-600 mt-6">
           Back to{" "}
-          <Link to="/login" className="text-blue-600 hover:underline">
+          <Link to="/login" className="text-indigo-600 hover:underline">
             Login Page
           </Link>
         </p>

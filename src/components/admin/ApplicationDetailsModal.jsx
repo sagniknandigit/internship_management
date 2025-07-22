@@ -294,7 +294,7 @@ const ApplicationDetailsModal = ({
         </div>
 
         {/* Footer with Status Change and Close/Cancel Buttons */}
-        <div className="p-5 border-t border-indigo-100 flex flex-col sm:flex-row justify-between items-center gap-4 sticky bottom-0 bg-white z-10">
+        <div className="p-5 border-t border-indigo-100 bg-amber-100 flex flex-col sm:flex-row justify-between items-center gap-4 sticky bottom-0 z-10">
           <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
             <label
               htmlFor="statusSelectFooter"
@@ -306,7 +306,7 @@ const ApplicationDetailsModal = ({
               id="statusSelectFooter"
               value={currentModalStatus}
               onChange={handleModalStatusChange}
-              className="input-field px-3 py-2 text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 w-full sm:w-auto"
+              className="input-field px-3 py-2 text-sm bg-white border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 w-full sm:w-auto"
             >
               {statusOptions.map((status) => (
                 <option key={status} value={status}>
