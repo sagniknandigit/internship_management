@@ -20,7 +20,7 @@ const ProfileAvatar = ({ user, size = "lg" }) => {
   };
 
   const initials = getInitials(user.name);
-  console.log("ProfileAvatar user:", user.profilePictureUrl);
+  // console.log("ProfileAvatar user:", user.profilePictureUrl);
   const containerSizeClass = sizeClasses[size] || sizeClasses["lg"];
 
   return (
