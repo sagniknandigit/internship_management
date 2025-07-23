@@ -6,26 +6,41 @@ const ApplicationDetailsModal = ({
   applicationDetails,
   onStatusChange, // Callback to update status in parent
   statusColors, // Pass statusColors map for consistency
+  mentorsList, // NEW: List of available mentors
+  onAssignMentor, // NEW: Callback to assign mentor in parent
 }) => {
-  // Use a local state for the status inside the modal to control "Change Status" button
   const [currentModalStatus, setCurrentModalStatus] = useState(
     applicationDetails?.status || "Submitted"
   );
+  const [selectedMentor, setSelectedMentor] = useState(
+    applicationDetails?.currentAssignedMentorId || ""
+  ); // State for selected mentor in modal
   const [modalSuccessMessage, setModalSuccessMessage] = useState("");
   const [modalErrorMessage, setModalErrorMessage] = useState("");
 
-  // Update internal status when applicationDetails changes (e.g., if parent refreshes data)
   useEffect(() => {
     if (applicationDetails?.status) {
       setCurrentModalStatus(applicationDetails.status);
     }
-  }, [applicationDetails?.status]);
+    // Set selected mentor when modal opens or applicationDetails change
+    if (applicationDetails?.currentAssignedMentorId) {
+      setSelectedMentor(applicationDetails.currentAssignedMentorId);
+    } else {
+      setSelectedMentor(""); // No mentor assigned
+    }
+  }, [applicationDetails]); // Depend on applicationDetails to re-initialize
 
   if (!isOpen || !applicationDetails) return null;
 
   const handleModalStatusChange = (e) => {
     setCurrentModalStatus(e.target.value);
-    setModalSuccessMessage(""); // Clear messages on status change attempt
+    setModalSuccessMessage("");
+    setModalErrorMessage("");
+  };
+
+  const handleMentorSelectChange = (e) => {
+    setSelectedMentor(e.target.value);
+    setModalSuccessMessage("");
     setModalErrorMessage("");
   };
 
@@ -37,12 +52,24 @@ const ApplicationDetailsModal = ({
     setModalSuccessMessage("");
     setModalErrorMessage("");
 
-    // Call the parent's status change handler
     onStatusChange(applicationDetails.applicationId, currentModalStatus);
     setModalSuccessMessage("Status change submitted. Data refreshed!");
-    // The parent (ManageApplications) will handle actual data update and refreshing the list.
-    // We expect the parent to also manage its own success/error messages for the operation.
-    // For immediate modal feedback, we set a message here.
+  };
+
+  const handleAssignMentorClick = () => {
+    if (!selectedMentor) {
+      setModalErrorMessage("Please select a mentor to assign.");
+      return;
+    }
+    if (selectedMentor === applicationDetails.currentAssignedMentorId) {
+      setModalErrorMessage("This mentor is already assigned.");
+      return;
+    }
+    setModalSuccessMessage("");
+    setModalErrorMessage("");
+
+    onAssignMentor(applicationDetails.internId, selectedMentor); // Pass intern ID and selected mentor ID
+    setModalSuccessMessage("Mentor assignment submitted. Data refreshed!");
   };
 
   const handleDownload = (fileName) => {
@@ -101,7 +128,7 @@ const ApplicationDetailsModal = ({
             </div>
           )}
 
-          {/* Application Summary - Now with responsive grid */}
+          {/* Application Summary */}
           <section className="pb-4 border-b border-gray-100">
             <h3 className="text-xl font-bold text-indigo-700 mb-3">
               Internship Applied For:
@@ -139,7 +166,68 @@ const ApplicationDetailsModal = ({
             </div>
           </section>
 
-          {/* Personal Information - Retains flex-wrap for column-like flow with wrapping */}
+          {/* NEW: Assign Mentor Section - Appears only if status is "Hired" */}
+          {applicationDetails.status === "Hired" && (
+            <section className="pb-4 pt-4 border-t border-gray-100">
+              {" "}
+              {/* Added border-t for separation */}
+              <h4 className="font-bold text-indigo-700 mb-3">Assign Mentor:</h4>
+              <div className="flex flex-col sm:flex-row items-end gap-4">
+                {" "}
+                {/* items-end to align bottom */}
+                <div className="flex-1 w-full sm:w-auto">
+                  <label
+                    htmlFor="mentorAssignSelect"
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                  >
+                    Select Mentor:
+                  </label>
+                  <select
+                    id="mentorAssignSelect"
+                    value={selectedMentor}
+                    onChange={handleMentorSelectChange}
+                    className="input-field w-full px-3 py-2 text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                  >
+                    <option value="">-- Select Mentor --</option>
+                    {mentorsList.map((mentor) => (
+                      <option key={mentor.id} value={mentor.id}>
+                        {mentor.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="w-full sm:w-auto">
+                  <button
+                    onClick={handleAssignMentorClick}
+                    disabled={
+                      !selectedMentor ||
+                      selectedMentor ===
+                        applicationDetails.currentAssignedMentorId
+                    }
+                    className={`py-2 px-4 rounded-md font-semibold text-sm transition-colors duration-200 w-full sm:w-auto ${
+                      !selectedMentor ||
+                      selectedMentor ===
+                        applicationDetails.currentAssignedMentorId
+                        ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                        : "bg-indigo-600 hover:bg-indigo-700 text-white"
+                    }`}
+                  >
+                    Assign Mentor
+                  </button>
+                </div>
+              </div>
+              {applicationDetails.currentAssignedMentorName && (
+                <p className="text-sm text-gray-600 mt-2">
+                  Currently assigned to:{" "}
+                  <span className="font-medium">
+                    {applicationDetails.currentAssignedMentorName}
+                  </span>
+                </p>
+              )}
+            </section>
+          )}
+
+          {/* Personal Information */}
           <section className="pb-4 border-b border-gray-100">
             <h4 className="font-bold text-indigo-700 mb-3">
               Personal Information:
@@ -160,7 +248,7 @@ const ApplicationDetailsModal = ({
             </div>
           </section>
 
-          {/* Academic Details - Retains flex-wrap for column-like flow with wrapping */}
+          {/* Academic Details */}
           <section className="pb-4 border-b border-gray-100">
             <h4 className="font-bold text-indigo-700 mb-3">
               Academic Details:
@@ -180,7 +268,7 @@ const ApplicationDetailsModal = ({
             </div>
           </section>
 
-          {/* Skills and Links - Retains flex-wrap for column-like flow with wrapping */}
+          {/* Skills and Links */}
           <section className="pb-4 border-b border-gray-100">
             <h4 className="font-bold text-indigo-700 mb-3">
               Skills and Links:
@@ -218,7 +306,7 @@ const ApplicationDetailsModal = ({
             </div>
           </section>
 
-          {/* Essay Questions - Retains flex-col for stacking */}
+          {/* Essay Questions */}
           <section className="pb-4 border-b border-gray-100">
             <h4 className="font-bold text-indigo-700 mb-3">Essay Questions:</h4>
             <div className="flex flex-col gap-y-2">
@@ -233,7 +321,7 @@ const ApplicationDetailsModal = ({
             </div>
           </section>
 
-          {/* Documents - Now with responsive grid */}
+          {/* Documents */}
           <section className="pb-4">
             <h4 className="font-bold text-indigo-700 mb-3">Documents:</h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -328,8 +416,8 @@ const ApplicationDetailsModal = ({
               Change Status
             </button>
             <button
-              onClick={onClose} // This button will act as "Cancel" for status change and also close the modal
-              className="py-2 px-4 bg-gray-300 hover:bg-gray-300 text-gray-800 font-semibold rounded-md text-sm transition-colors duration-200 w-full sm:w-auto"
+              onClick={onClose}
+              className="py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded-md text-sm transition-colors duration-200 w-full sm:w-auto"
             >
               Cancel
             </button>

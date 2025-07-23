@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { getData, saveData } from "../../services/dataService";
-import ApplicationDetailsModal from "../../components/admin/ApplicationDetailsModal"; // Import the new modal component
+import ApplicationDetailsModal from "../../components/admin/ApplicationDetailsModal";
 
 const statusColors = {
   "Under Review": "bg-yellow-100 text-yellow-800",
@@ -22,6 +22,8 @@ const ManageApplications = () => {
     useState(null);
   const [globalSuccessMessage, setGlobalSuccessMessage] = useState("");
   const [globalErrorMessage, setGlobalErrorMessage] = useState("");
+  const [mentors, setMentors] = useState([]); // NEW: State to store list of mentors
+  const [mentorAssignments, setMentorAssignments] = useState({}); // NEW: State to store mentor assignments
 
   const fetchAndEnrichData = useCallback(() => {
     setLoading(true);
@@ -29,12 +31,30 @@ const ManageApplications = () => {
       const applicationsData = getData("applications") || [];
       const internshipsData = getData("internships") || [];
       const usersData = getData("users") || [];
+      const assignments = getData("mentorAssignments") || {}; // NEW: Fetch mentor assignments
+
+      // Filter users to get only mentors
+      const mentorsList = usersData.filter((user) => user.role === "Mentor");
+      setMentors(mentorsList);
+      setMentorAssignments(assignments); // Set mentor assignments state
 
       const enriched = applicationsData.map((app) => {
         const intern = usersData.find((user) => user.id === app.internId);
         const internship = internshipsData.find(
           (i) => i.id === app.internshipId
         );
+
+        // Determine current assigned mentor for this intern
+        let currentAssignedMentor = null;
+        if (intern?.id) {
+          for (const mentorId in assignments) {
+            if (assignments[mentorId].includes(intern.id)) {
+              currentAssignedMentor = usersData.find((u) => u.id === mentorId);
+              break;
+            }
+          }
+        }
+
         return {
           ...app,
           internName: intern ? intern.name : "Unknown",
@@ -58,6 +78,13 @@ const ManageApplications = () => {
           applicantExpectations: app.expectations,
           resumeFileName: app.resume,
           coverLetterFileName: app.coverLetter,
+          // NEW: Add current assigned mentor info to application details
+          currentAssignedMentorId: currentAssignedMentor
+            ? currentAssignedMentor.id
+            : null,
+          currentAssignedMentorName: currentAssignedMentor
+            ? currentAssignedMentor.name
+            : null,
         };
       });
       setAllApplications(enriched);
@@ -125,8 +152,10 @@ const ManageApplications = () => {
       );
       saveData("applications", updatedApplications);
 
+      // Re-fetch all data to update the table and current modal view
       fetchAndEnrichData();
 
+      // Also directly update the selectedApplicationDetails for immediate modal reflection
       setSelectedApplicationDetails((prev) =>
         prev ? { ...prev, status: newStatus } : null
       );
@@ -136,6 +165,38 @@ const ManageApplications = () => {
     } catch (error) {
       console.error("Failed to update application status:", error);
       setGlobalErrorMessage("Failed to update status. Please try again.");
+      setTimeout(() => setGlobalErrorMessage(""), 3000);
+    }
+  };
+
+  // NEW: handleAssignMentor function
+  const handleAssignMentor = (internId, selectedMentorId) => {
+    try {
+      const currentAssignments = getData("mentorAssignments") || {};
+      const updatedAssignments = { ...currentAssignments };
+
+      // Remove intern from any existing mentor's list
+      for (const mentorKey in updatedAssignments) {
+        updatedAssignments[mentorKey] = updatedAssignments[mentorKey].filter(
+          (id) => id !== internId
+        );
+      }
+
+      // Add intern to the selected mentor's list
+      if (!updatedAssignments[selectedMentorId]) {
+        updatedAssignments[selectedMentorId] = [];
+      }
+      updatedAssignments[selectedMentorId].push(internId);
+
+      saveData("mentorAssignments", updatedAssignments); // Save updated assignments
+
+      fetchAndEnrichData(); // Re-fetch all data to update UI
+
+      setGlobalSuccessMessage("Mentor assigned successfully!");
+      setTimeout(() => setGlobalSuccessMessage(""), 3000);
+    } catch (error) {
+      console.error("Failed to assign mentor:", error);
+      setGlobalErrorMessage("Failed to assign mentor. Please try again.");
       setTimeout(() => setGlobalErrorMessage(""), 3000);
     }
   };
@@ -287,6 +348,8 @@ const ManageApplications = () => {
           applicationDetails={selectedApplicationDetails}
           onStatusChange={handleStatusChangeInModal}
           statusColors={statusColors}
+          mentorsList={mentors} // Pass the list of mentors
+          onAssignMentor={handleAssignMentor} // Pass the new assign mentor callback
         />
       )}
     </div>

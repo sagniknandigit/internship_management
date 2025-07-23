@@ -1,17 +1,10 @@
-// Import mock data from local JSON files
 import allUsers from "../mock/user.json";
 import allTasks from "../mock/tasks.json";
 import allMeetings from "../mock/meetings.json";
 import allConversations from "../mock/conversations.json";
 import allApplications from "../mock/applications.json";
 import allSharedDocuments from "../mock/sharedDocuments.json";
-
-// Hardcoded mentor to intern assignment mapping
-const mentorAssignments = {
-  mentor01: ["intern01", "intern02", "intern03"],
-  mentor02: ["intern04", "intern06"],
-  mentor03: ["intern05", "intern07", "intern09"],
-};
+import mentorAssignments from "../mock/mentorAssignments.json"; //
 
 // Simulate API call delay
 const fetchWithDelay = (data, delay = 500) => {
@@ -28,30 +21,34 @@ const fetchWithDelay = (data, delay = 500) => {
 
 /** Get applications for a given intern ID */
 export const getApplicationsByInternId = (internId) => {
-  const applications = allApplications.filter(app => app.internId === internId);
+  const applications = allApplications.filter(
+    (app) => app.internId === internId
+  );
   return fetchWithDelay(applications);
 };
 
 /** Get tasks assigned to a given intern ID */
 export const getTasksByInternId = (internId) => {
-  const tasks = allTasks.filter(task => task.internId === internId);
+  const tasks = allTasks.filter((task) => task.internId === internId);
   return fetchWithDelay(tasks);
 };
 
 /** Get meetings scheduled for a given intern ID */
 export const getMeetingsByInternId = (internId) => {
-  const meetings = allMeetings.filter(meeting => meeting.internId === internId);
+  const meetings = allMeetings.filter(
+    (meeting) => meeting.internId === internId
+  );
   return fetchWithDelay(meetings);
 };
 
 // Get shared documents to a given intern ID / uploaded by mentor ID
-export const getSharedDocuments=({internId,mentorId})=>{
-  const allDocs=allSharedDocuments;
-  let filteredDocs=[];
-  if(internId){
-    filteredDocs=allDocs.filter(doc=>doc.internId===internId);
-  } else if(mentorId){
-    filteredDocs=allDocs.filter(doc=>doc.uploadedBy===mentorId);
+export const getSharedDocuments = ({ internId, mentorId }) => {
+  const allDocs = allSharedDocuments;
+  let filteredDocs = [];
+  if (internId) {
+    filteredDocs = allDocs.filter((doc) => doc.internId === internId);
+  } else if (mentorId) {
+    filteredDocs = allDocs.filter((doc) => doc.uploadedBy === mentorId);
   }
   return fetchWithDelay(filteredDocs);
 };
@@ -124,4 +121,3 @@ export const getConversationsForMentor = (mentorId) => {
 // export const getApplicationById = (id) => { ... }
 // export const submitApplication = (data) => { ... }
 // export const getAllInternships = () => { ... }
-

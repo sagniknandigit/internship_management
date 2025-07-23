@@ -1,0 +1,5 @@
+{
+  "mentor01": ["intern01", "intern02", "intern03"],
+  "mentor02": ["intern04", "intern06"],
+  "mentor03": ["intern05", "intern07", "intern09"]
+}
