@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { getData, saveData } from "../../services/dataService";
-import Spinner from "../../components/ui/Spinner"; // Assuming you have a Spinner component
+import Spinner from "../../components/ui/Spinner";
 
 const InterviewScheduler = () => {
   const [formData, setFormData] = useState({
@@ -31,7 +31,6 @@ const InterviewScheduler = () => {
     if (date && startTime && duration) {
       const meetingDuration = parseInt(duration, 10);
 
-      // Create a Date object for the start time
       const startDate = new Date(`${date}T${startTime}:00`);
       startDate.setMinutes(startDate.getMinutes() + meetingDuration);
 
@@ -42,7 +41,6 @@ const InterviewScheduler = () => {
     return "N/A";
   }, [formData]);
 
-  // Fetch initial data and periodically refresh
   const fetchAllData = useCallback(() => {
     setLoading(true);
     try {
@@ -51,7 +49,6 @@ const InterviewScheduler = () => {
       const internshipsData = getData("internships") || [];
       const meetingsData = getData("meetings") || [];
 
-      // --- FIX 1: Filter interns to only include those who have applied ---
       const internsWithApplicationsIds = new Set(
         applicationsData.map((app) => app.internId)
       );
@@ -61,13 +58,11 @@ const InterviewScheduler = () => {
             user.role === "Intern" && internsWithApplicationsIds.has(user.id)
         )
       );
-      // --- END FIX 1 ---
 
       setMentors(usersData.filter((user) => user.role === "Mentor"));
       setAllApplicationsData(applicationsData);
       setAllInternships(internshipsData);
 
-      // Enrich scheduled meetings for display
       const enrichedMeetings = meetingsData.map((meeting) => {
         const intern = usersData.find((u) => u.id === meeting.participants[0]);
         const mentor = usersData.find((u) => u.id === meeting.mentor);
@@ -109,7 +104,6 @@ const InterviewScheduler = () => {
     return () => clearInterval(intervalId);
   }, [fetchAllData]);
 
-  // Handle intern selection to populate relevant applications and prevent auto-reset
   useEffect(() => {
     if (
       formData.selectedInternId &&
@@ -134,7 +128,6 @@ const InterviewScheduler = () => {
 
       setInternApplications(enrichedApps);
 
-      // --- FIX 2: Prevent auto-reset if current selection is still valid ---
       const currentSelectionStillValid = enrichedApps.some(
         (app) => app.applicationId === formData.selectedApplicationId
       );
@@ -144,10 +137,8 @@ const InterviewScheduler = () => {
           selectedApplicationId: enrichedApps[0].applicationId,
         }));
       } else if (!currentSelectionStillValid) {
-        // Only reset if the current selection is no longer in the valid list
         setFormData((prev) => ({ ...prev, selectedApplicationId: "" }));
       }
-      // --- END FIX 2 ---
     } else {
       setInternApplications([]);
       setFormData((prev) => ({ ...prev, selectedApplicationId: "" }));
@@ -220,9 +211,8 @@ const InterviewScheduler = () => {
         startTime: "",
         instructions: "",
       });
-      // Do not clear internApplications here, let the useEffect handle it when selectedInternId resets.
 
-      fetchAllData(); // Re-fetch all data to update the list of meetings
+      fetchAllData();
     } catch (error) {
       console.error("Failed to schedule interview:", error);
       setErrorMessage("Failed to schedule interview. Please try again.");
@@ -230,7 +220,7 @@ const InterviewScheduler = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-6 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <h1 className="text-3xl font-extrabold text-gray-900 mb-6">
         Schedule Interview
       </h1>
@@ -246,13 +236,14 @@ const InterviewScheduler = () => {
       )}
 
       {/* Interview Scheduling Form */}
-      <div className="bg-white p-6 rounded-lg shadow-xl border border-gray-100 mb-8 max-w-4xl">
+      <div className="bg-white p-6 rounded-lg shadow-xl border border-gray-100 mb-8 max-w-4xl mx-auto">
+        {" "}
+        {/* Added max-w-4xl mx-auto */}
         <h2 className="text-xl font-bold text-indigo-700 mb-4">
           Schedule New Interview
         </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Intern Dropdown */}
             <div className="form-group">
               <label
                 htmlFor="selectedInternId"
@@ -277,7 +268,6 @@ const InterviewScheduler = () => {
               </select>
             </div>
 
-            {/* Mentor Dropdown */}
             <div className="form-group">
               <label
                 htmlFor="selectedMentorId"
@@ -302,7 +292,6 @@ const InterviewScheduler = () => {
               </select>
             </div>
 
-            {/* Application/Job Title Dropdown */}
             <div className="form-group">
               <label
                 htmlFor="selectedApplicationId"
@@ -336,7 +325,6 @@ const InterviewScheduler = () => {
               </select>
             </div>
 
-            {/* Interview Link */}
             <div className="form-group">
               <label
                 htmlFor="interviewLink"
@@ -356,7 +344,6 @@ const InterviewScheduler = () => {
               />
             </div>
 
-            {/* Date */}
             <div className="form-group">
               <label
                 htmlFor="date"
@@ -375,7 +362,6 @@ const InterviewScheduler = () => {
               />
             </div>
 
-            {/* Start Time */}
             <div className="form-group">
               <label
                 htmlFor="startTime"
@@ -394,7 +380,6 @@ const InterviewScheduler = () => {
               />
             </div>
 
-            {/* Duration */}
             <div className="form-group">
               <label
                 htmlFor="duration"
@@ -418,7 +403,6 @@ const InterviewScheduler = () => {
               </select>
             </div>
 
-            {/* Calculated End Time Display */}
             <div className="form-group">
               <label
                 htmlFor="endTime"
@@ -431,13 +415,12 @@ const InterviewScheduler = () => {
                 name="endTime"
                 type="text"
                 value={calculateEndTime()}
-                className="input-field w-full bg-gray-100 cursor-not-allowed focus:ring-0 focus:border-gray-300" // Remove focus ring for disabled
+                className="input-field w-full bg-gray-100 cursor-not-allowed focus:ring-0 focus:border-gray-300"
                 disabled
               />
             </div>
           </div>
 
-          {/* Instructions */}
           <div className="form-group">
             <label
               htmlFor="instructions"
@@ -466,7 +449,9 @@ const InterviewScheduler = () => {
       </div>
 
       {/* List of Conducted Interviews */}
-      <div className="bg-white p-6 rounded-lg shadow-xl border border-gray-100 max-w-4xl">
+      <div className="bg-white p-6 rounded-lg shadow-xl border border-gray-100 max-w-4xl mx-auto">
+        {" "}
+        {/* Added max-w-4xl mx-auto */}
         <h2 className="text-xl font-bold text-indigo-700 mb-4">
           Scheduled Interviews
         </h2>

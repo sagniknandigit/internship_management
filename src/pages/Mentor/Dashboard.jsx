@@ -1,111 +1,111 @@
-import React, { useState, useEffect } from "react";
-import { useAuth } from "../../context/AuthContext";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import {
-  getInternsByMentorId,
-  getTasksForMentorReview,
-  getMeetingsByMentorId,
-} from "../../services/mockDataService";
-import Spinner from "../../components/ui/Spinner";
-
-const StatCard = ({ title, value, linkTo, linkText, isLoading }) => (
-  <div className="bg-white p-6 rounded-lg shadow-md">
-    <h3 className="text-gray-500 text-sm font-medium">{title}</h3>
-    {isLoading ? (
-      <div className="mt-2 h-9 w-12 bg-gray-200 rounded animate-pulse"></div>
-    ) : (
-      <p className="text-3xl font-bold text-gray-900 mt-2">{value}</p>
-    )}
-    {linkTo && (
-      <Link
-        to={linkTo}
-        className="text-sm text-indigo-600 hover:underline mt-4 block"
-      >
-        {linkText} &rarr;
-      </Link>
-    )}
-  </div>
-);
+import { useAuth } from "../../context/AuthContext";
+import { getData } from "../../services/dataService";
+import Spinner from "../../components/ui/Spinner"; // Assuming you have a Spinner component
 
 const MentorDashboard = () => {
   const { user } = useAuth();
-  const [stats, setStats] = useState({
-    internCount: 0,
-    reviewTaskCount: 0,
-    meetingCount: 0,
-  });
+  const [recentUpdates, setRecentUpdates] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (user?.id) {
-      const fetchDashboardData = async () => {
-        setLoading(true);
-        // Fetch all data in parallel for efficiency
-        const [interns, tasks, meetings] = await Promise.all([
-          getInternsByMentorId(user.id),
-          getTasksForMentorReview(user.id),
-          getMeetingsByMentorId(user.id),
-        ]);
+  const fetchRecentUpdates = useCallback(() => {
+    setLoading(true);
+    try {
+      const allUpdates = getData("updates") || [];
+      const relevantUpdates = allUpdates.filter((update) => {
+        return (
+          update.targetRole === "All" ||
+          update.targetRole === user.role ||
+          (update.targetRole === "Specific" && update.targetUserId === user.id)
+        );
+      });
 
-        setStats({
-          internCount: interns.length,
-          reviewTaskCount: tasks.filter(
-            (task) => task.status === "Pending Review"
-          ).length,
-          meetingCount: meetings.length,
-        });
-
-        setLoading(false);
-      };
-
-      fetchDashboardData();
+      const sortedUpdates = relevantUpdates.sort(
+        (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+      );
+      setRecentUpdates(sortedUpdates.slice(0, 3));
+      setLoading(false);
+    } catch (error) {
+      console.error(
+        "Failed to fetch recent updates for mentor dashboard:",
+        error
+      );
+      setLoading(false);
     }
   }, [user]);
 
-  return (
-    <div>
-      <h1 className="text-3xl font-bold text-gray-900 mb-2">
-        Mentor Dashboard
-      </h1>
-      <p className="text-gray-600 mb-8">
-        Welcome back, {user?.name}! Manage your interns and tasks.
-      </p>
+  useEffect(() => {
+    if (user) {
+      fetchRecentUpdates();
+      const intervalId = setInterval(fetchRecentUpdates, 5000);
+      return () => clearInterval(intervalId);
+    }
+  }, [user, fetchRecentUpdates]);
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <StatCard
-          title="Assigned Interns"
-          value={stats.internCount}
-          linkTo="/mentor/interns"
-          linkText="Manage Interns"
-          isLoading={loading}
-        />
-        <StatCard
-          title="Tasks to Review"
-          value={stats.reviewTaskCount}
-          linkTo="/mentor/tasks"
-          linkText="Review Tasks"
-          isLoading={loading}
-        />
-        <StatCard
-          title="Upcoming Meetings"
-          value={stats.meetingCount}
-          linkTo="/mentor/meetings"
-          linkText="View Schedule"
-          isLoading={loading}
-        />
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-40">
+        <Spinner />
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h1 className="text-3xl font-extrabold text-gray-900 mb-6">
+        Welcome, {user?.name || "Mentor"}!
+      </h1>
+
+      {/* Recent Updates Section */}
+      <div className="bg-white p-6 rounded-lg shadow-xl border border-gray-100 mb-8 space-y-4">
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-bold text-gray-800">Recent Updates</h2>
+          <Link
+            to="/mentor/notifications" // Link to a dedicated notifications page (to be created)
+            className="text-indigo-600 hover:text-indigo-800 font-semibold"
+          >
+            View All
+          </Link>
+        </div>
+        {recentUpdates.length === 0 ? (
+          <p className="text-gray-600">No recent updates.</p>
+        ) : (
+          <div className="space-y-3">
+            {recentUpdates.map((update) => (
+              <div
+                key={update.id}
+                className="p-3 bg-gray-50 rounded-md border border-gray-100"
+              >
+                <p className="font-semibold text-gray-800">{update.title}</p>
+                <p className="text-gray-600 text-sm line-clamp-2">
+                  {update.content}
+                </p>
+                <p className="text-gray-500 text-xs mt-1">
+                  Posted by {update.postedByUserRole} on{" "}
+                  {new Date(update.timestamp).toLocaleDateString()}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
-      <div className="mt-8 bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-xl font-bold text-gray-800 mb-4">
-          Recent Intern Submissions
+      {/* Other Mentor Dashboard sections (e.g., Assigned Interns, Review Tasks, Upcoming Meetings) can go here */}
+      <div className="bg-white p-6 rounded-lg shadow-xl border border-gray-100 mb-8">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">
+          Assigned Interns
         </h2>
-        {loading ? (
-          <p className="text-gray-500">Loading activity...</p>
-        ) : (
-          <p className="text-gray-500">
-            A feed of recent task submissions will appear here.
-          </p>
-        )}
+        <p className="text-gray-600">Content for mentor's assigned interns.</p>
+      </div>
+
+      <div className="bg-white p-6 rounded-lg shadow-xl border border-gray-100 mb-8">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">
+          Tasks to Review
+        </h2>
+        <p className="text-gray-600">
+          Content for mentor's tasks awaiting review.
+        </p>
       </div>
     </div>
   );

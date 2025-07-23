@@ -3,8 +3,8 @@ import initialUsers from "../mock/user.json";
 import initialApplications from "../mock/applications.json";
 import initialInternshipStats from "../mock/internshipStats.json";
 import initialTasks from "../mock/tasks.json";
-// UPDATED: Import initialMentorAssignments from its new JSON file
-import initialMentorAssignments from "../mock/mentorAssignments.json"; //
+import initialMentorAssignments from '../mock/mentorAssignments.json';
+import initialUpdates from '../mock/updates.json';
 
 const MOCK_DATA_MAP = {
   internships: initialInternships,
@@ -13,6 +13,7 @@ const MOCK_DATA_MAP = {
   internshipStats: initialInternshipStats,
   tasks: initialTasks,
   mentorAssignments: initialMentorAssignments,
+  updates: initialUpdates,
 };
 
 /**

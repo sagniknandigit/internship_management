@@ -1,16 +1,14 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Navbar from "../components/layout/Navbar";
 import Sidebar from "../components/layout/Sidebar";
 
 const AdminLayout = () => {
   return (
-    <div className="flex bg-gray-100 min-h-screen">
+    <div className="flex min-h-screen w-full">
       {" "}
-      <Sidebar />
-      <div className="flex flex-col flex-1 ml-64">
-        {" "}
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-6">
+      <Sidebar /> 
+      <div className="flex flex-col flex-1 ml-64 overflow-x-hidden">
+        <main className="flex-1 overflow-y-auto bg-gray-50 p-6">
           {" "}
           <Outlet />
         </main>

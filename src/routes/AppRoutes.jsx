@@ -1,8 +1,6 @@
-// src/routes/AppRoutes.jsx
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import ScrollToTop from "../components/layout/ScrollToTop"; // Import ScrollToTop component
+import ScrollToTop from "../components/layout/ScrollToTop"; // Ensure ScrollToTop is imported
 
 // Layouts
 import MainLayout from "../layouts/MainLayout";
@@ -28,6 +26,7 @@ import Reports from "../pages/Admin/Reports";
 import AdminSettings from "../pages/Admin/AdminSettings";
 import AllInternships from "../pages/Admin/AllInternships";
 import ManageUsers from "../pages/Admin/ManageUsers";
+import PostUpdate from "../pages/Admin/PostUpdate"; // NEW: Import PostUpdate
 
 // Intern Pages
 import InternDashboard from "../pages/Intern/Dashboard";
@@ -48,33 +47,35 @@ import MentorChat from "../pages/Mentor/MentorChat";
 import MentorSettings from "../pages/Mentor/MentorSettings";
 import MentorDocuments from "../pages/Mentor/MentorDocuments";
 
+// Common Pages
+import Notifications from "../pages/common/Notifications"; // NEW: Import Notifications
+
 // Components
-import ProtectedRoute from "./ProtectedRoutes";
+import ProtectedRoute from "./ProtectedRoutes"; // Correctly named ProtectedRoute
 
 const AppRoutes = () => {
   return (
     <>
-      {" "}
-      {/* Use a React Fragment if you need a single parent element */}
-      <ScrollToTop /> {/* Place ScrollToTop here, as a sibling to Routes */}
+      <ScrollToTop /> {/* Scrolls to top on route change */}
       <Routes>
         {/* Public Routes */}
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />{" "}
-        {/* Corrected typo: remove extra /register" element */}
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="/admin/login" element={<AdminLoginPage />} />
         <Route path="/unauthorized" element={<UnauthorizedPage />} />
+
         {/* Main Public Layout */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/internships" element={<InternshipsPage />} />
         </Route>
-        {/* Intern Routes */}
+
+        {/* Intern Routes: ProtectedRoute wraps InternLayout which contains the Sidebar */}
         <Route
           path="/intern"
           element={
             <ProtectedRoute roles={["Intern"]}>
-              <InternLayout />
+              <InternLayout /> {/* InternLayout renders the Sidebar */}
             </ProtectedRoute>
           }
         >
@@ -87,13 +88,16 @@ const AppRoutes = () => {
           <Route path="chat" element={<Chat />} />
           <Route path="meetings" element={<Meetings />} />
           <Route path="settings" element={<Settings />} />
+          <Route path="notifications" element={<Notifications />} />{" "}
+          {/* NEW: Notifications Route */}
         </Route>
-        {/* Mentor Routes */}
+
+        {/* Mentor Routes: ProtectedRoute wraps MentorLayout which contains the Sidebar */}
         <Route
           path="/mentor"
           element={
             <ProtectedRoute roles={["Mentor"]}>
-              <MentorLayout />
+              <MentorLayout /> {/* MentorLayout renders the Sidebar */}
             </ProtectedRoute>
           }
         >
@@ -105,13 +109,18 @@ const AppRoutes = () => {
           <Route path="meetings" element={<MentorMeetings />} />{" "}
           <Route path="chat" element={<MentorChat />} />
           <Route path="settings" element={<MentorSettings />} />
+          <Route path="post-update" element={<PostUpdate />} />{" "}
+          {/* NEW: Post Update Route */}
+          <Route path="notifications" element={<Notifications />} />{" "}
+          {/* NEW: Notifications Route */}
         </Route>
-        {/* Admin Dashboard */}
+
+        {/* Admin Routes: ProtectedRoute wraps AdminLayout which contains the Sidebar */}
         <Route
           path="/admin"
           element={
             <ProtectedRoute roles={["Admin"]}>
-              <AdminLayout />
+              <AdminLayout /> {/* AdminLayout renders the Sidebar */}
             </ProtectedRoute>
           }
         >
@@ -124,8 +133,13 @@ const AppRoutes = () => {
           <Route path="interview-scheduler" element={<InterviewScheduler />} />
           <Route path="reports" element={<Reports />} />
           <Route path="settings" element={<AdminSettings />} />
+          <Route path="post-update" element={<PostUpdate />} />{" "}
+          {/* NEW: Post Update Route */}
+          <Route path="notifications" element={<Notifications />} />{" "}
+          {/* NEW: Notifications Route */}
         </Route>
-        {/* Catch-All */}
+
+        {/* Catch-All for undefined routes */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>

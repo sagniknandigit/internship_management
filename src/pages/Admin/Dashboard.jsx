@@ -4,12 +4,15 @@ import StatCard from "../../components/admin/StatsCard";
 import InternshipCard from "../../components/admin/AdminInternshipCard";
 import { getData, saveData } from "../../services/dataService";
 import InternshipDetailsModal from "./InternshipDetailsModal";
+import { useAuth } from "../../context/AuthContext"; // Import useAuth to get current user for filtering updates
 
 const Dashboard = () => {
+  const { user } = useAuth(); // Get current logged-in user
   const [enrichedInternships, setEnrichedInternships] = useState([]);
   const [users, setUsers] = useState([]);
-  const [recentApplications, setRecentApplications] = useState([]); // State for last 2 applications
-  const [upcomingInterviews, setUpcomingInterviews] = useState([]); // State for upcoming interviews
+  const [recentApplications, setRecentApplications] = useState([]);
+  const [upcomingInterviews, setUpcomingInterviews] = useState([]);
+  const [recentUpdates, setRecentUpdates] = useState([]); // State for recent updates
   const [selectedInternship, setSelectedInternship] = useState(null);
   const [applicants, setApplicants] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,11 +22,11 @@ const Dashboard = () => {
     const stats = getData("internshipStats");
     const applications = getData("applications");
     const allUsers = getData("users");
-    const meetings = getData("meetings"); // Fetch meetings data
+    const meetings = getData("meetings");
+    const allUpdates = getData("updates") || []; // Fetch all updates
 
     setUsers(allUsers);
 
-    // Enriched Internships (Existing Logic)
     const enrichedInternshipsData = baseInternships.map((internship) => {
       const stat = stats.find((s) => s.id === internship.id) || {};
       const applicantCount = applications.filter(
@@ -39,7 +42,6 @@ const Dashboard = () => {
     });
     setEnrichedInternships(enrichedInternshipsData);
 
-    // --- NEW: Prepare Last 2 Applications Submitted ---
     const enrichedApplications = applications.map((app) => {
       const intern = allUsers.find((u) => u.id === app.internId);
       const internship = baseInternships.find((i) => i.id === app.internshipId);
@@ -49,16 +51,13 @@ const Dashboard = () => {
         internshipTitle: internship ? internship.title : "Unknown Title",
       };
     });
-    // Sort by applicationDate in descending order and get the last 2
     const sortedApplications = enrichedApplications.sort(
       (a, b) => new Date(b.applicationDate) - new Date(a.applicationDate)
     );
-    setRecentApplications(sortedApplications.slice(0, 2)); // Get max 2 most recent applications
-    // --- END NEW: Prepare Last 2 Applications Submitted ---
+    setRecentApplications(sortedApplications.slice(0, 2));
 
-    // --- NEW: Prepare Upcoming Interviews (Max 3) ---
     const now = new Date();
-    const formatTimeComponent = (comp) => String(comp).padStart(2, "0"); // Helper function
+    const formatTimeComponent = (comp) => String(comp).padStart(2, "0");
 
     const enrichedMeetings = meetings.map((meeting) => {
       const intern = allUsers.find((u) => u.id === meeting.participants[0]);
@@ -67,7 +66,6 @@ const Dashboard = () => {
         (i) => i.id === meeting.internshipId
       );
 
-      // Recalculate end time for display if not explicitly stored
       let calculatedEndTime = "N/A";
       if (meeting.date && meeting.time && meeting.duration) {
         const tempDate = new Date(`${meeting.date}T${meeting.time}:00`);
@@ -90,23 +88,39 @@ const Dashboard = () => {
 
     const upcoming = enrichedMeetings.filter((meeting) => {
       const meetingDateTime = new Date(`${meeting.date}T${meeting.time}:00`);
-      // Only consider meetings that are in the future
       return meetingDateTime > now;
     });
 
-    // Sort upcoming meetings by date and time in ascending order
     const sortedUpcoming = upcoming.sort((a, b) => {
       const dateTimeA = new Date(`${a.date}T${a.time}:00`);
       const dateTimeB = new Date(`${b.date}T${b.time}:00`);
       return dateTimeA - dateTimeB;
     });
-    setUpcomingInterviews(sortedUpcoming.slice(0, 3)); // Get max 3 upcoming interviews
-    // --- END NEW: Prepare Upcoming Interviews ---
-  }, []);
+    setUpcomingInterviews(sortedUpcoming.slice(0, 3));
+
+    // --- NEW: Prepare Recent Updates for Admin Dashboard ---
+    const relevantUpdates = allUpdates.filter((update) => {
+      // An update is relevant if:
+      // 1. It targets 'All' users.
+      // 2. It targets the admin's specific role ('Admin').
+      // 3. It targets the admin's specific ID.
+      return (
+        update.targetRole === "All" ||
+        (user && update.targetRole === user.role) || // Check user existence
+        (user &&
+          update.targetRole === "Specific" &&
+          update.targetUserId === user.id)
+      );
+    });
+    const sortedUpdates = relevantUpdates.sort(
+      (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+    );
+    setRecentUpdates(sortedUpdates.slice(0, 3)); // Get max 3 most recent relevant updates
+    // --- END NEW: Prepare Recent Updates ---
+  }, [user]); // Added user to dependency array as update filtering depends on user
 
   useEffect(() => {
     loadAndEnrichData();
-    // Add interval for real-time updates on dashboard
     const intervalId = setInterval(loadAndEnrichData, 3000);
     return () => clearInterval(intervalId);
   }, [loadAndEnrichData]);
@@ -139,8 +153,8 @@ const Dashboard = () => {
       stat.id === internshipId ? { ...stat, active: false, closed: true } : stat
     );
     saveData("internshipStats", updatedStats);
-    loadAndEnrichData(); // Reload data to reflect the change on the UI
-    setIsModalOpen(false); // Close the modal
+    loadAndEnrichData();
+    setIsModalOpen(false);
   };
 
   const mentorCount = users.filter((u) => u.role === "Mentor").length;
@@ -149,56 +163,77 @@ const Dashboard = () => {
     (i) => i.active && !i.closed
   ).length;
 
-  // Recent internships shown from the overall enrichedInternships
   const recentInternships = enrichedInternships.slice(0, 3);
 
   return (
     <>
       <main className="flex-1 p-6 space-y-8 bg-gray-50">
+        <h1 className="text-3xl font-extrabold text-gray-900 mb-6">
+          Welcome Admin!
+        </h1>
         {/* Stat Cards Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <StatCard
-            title="Mentors"
-            count={mentorCount}
-            color="blue"
-            icon="mentor"
-          />
-          <StatCard
-            title="Interns"
-            count={internCount}
-            color="green"
-            icon="intern"
-          />
-          <StatCard
-            title="Active Internships"
-            count={activeInternshipCount}
-            color="purple"
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <StatCard title="Total Users" count={users.length} icon="total" />
+          <StatCard title="Total Interns" count={internCount} icon="intern" />
+          <StatCard title="Total Mentors" count={mentorCount} icon="mentor" />
+          {/* <StatCard
+            title="Total Internships"
+            count={enrichedInternships.length}
             icon="internship"
           />
+          <StatCard
+            title="Active Listings"
+            count={activeInternshipCount}
+            icon="active"
+          />
+          <StatCard
+            title="Total Applications"
+            count={
+              recentApplications.length > 0 ? recentApplications.length : 0
+            }
+            icon="applications"
+          />
+          <StatCard
+            title="Total Interviews"
+            count={
+              upcomingInterviews.length > 0 ? upcomingInterviews.length : 0
+            }
+            icon="interviews"
+          /> */}
         </div>
 
-        {/* Recent Internship Listings Section (Existing Logic) */}
-        <div className="bg-white p-6 rounded-lg shadow-xl border border-gray-100 space-y-4">
+        {/* Recent Updates Section (NEW) */}
+        <div className="bg-white p-6 rounded-lg shadow-xl border border-gray-100 mb-8 space-y-4">
           <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-bold text-gray-800">
-              Recent Listings
-            </h2>
+            <h2 className="text-2xl font-bold text-gray-800">Recent Updates</h2>
             <Link
-              to="/admin/all-internships"
+              to="/admin/notifications" // Link to a dedicated notifications page (to be created)
               className="text-indigo-600 hover:text-indigo-800 font-semibold"
             >
               View All
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {recentInternships.map((internship) => (
-              <InternshipCard
-                key={internship.id}
-                internship={internship}
-                onViewDetails={() => handleViewDetails(internship.id)}
-              />
-            ))}
-          </div>
+          {recentUpdates.length === 0 ? (
+            <p className="text-gray-600">No recent updates.</p>
+          ) : (
+            <div className="space-y-3">
+              {recentUpdates.map((update) => (
+                <div
+                  key={update.id}
+                  className="p-3 bg-gray-50 rounded-md border border-gray-100"
+                >
+                  <p className="font-semibold text-gray-800">{update.title}</p>
+                  <p className="text-gray-600 text-sm line-clamp-2">
+                    {update.content}
+                  </p>
+                  <p className="text-gray-500 text-xs mt-1">
+                    Posted by {update.postedByUserRole} on{" "}
+                    {new Date(update.timestamp).toLocaleDateString()}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Last 2 Applications Submitted Section */}
@@ -281,9 +316,32 @@ const Dashboard = () => {
             </div>
           )}
         </div>
+
+        {/* Recent Internship Listings Section */}
+        <div className="bg-white p-6 rounded-lg shadow-xl border border-gray-100 space-y-4">
+          <div className="flex justify-between items-center">
+            <h2 className="text-2xl font-bold text-gray-800">
+              Recent Listings
+            </h2>
+            <Link
+              to="/admin/all-internships"
+              className="text-indigo-600 hover:text-indigo-800 font-semibold"
+            >
+              View All
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {recentInternships.map((internship) => (
+              <InternshipCard
+                key={internship.id}
+                internship={internship}
+                onViewDetails={() => handleViewDetails(internship.id)}
+              />
+            ))}
+          </div>
+        </div>
       </main>
 
-      {/* Render the modal component */}
       <InternshipDetailsModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
